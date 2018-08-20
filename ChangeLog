@@ -1,0 +1,71 @@
+--- Current version
+Several minor bug fixes
+New null model RectHull
+
+--- 14-March-2015, version 1.0-13
+Updated gbif function to work with new GBIF web service
+
+--- 8-July-2013, version 0.8-15
+Added argument "concept" to function gbif to allow querying for synonyms. Suggested by Aaron Dodd
+Added additional threshold statistics suggested by Diego Nieto-Lugilde
+Some general clean-up to stay in sync with CRAN requirements
+
+--- 4-January-2013, version 0.8-5
+Improved "mess" function (for speed and for large raster)
+new functions "nicheEquivalency" and "nicheOverlap"
+bug fix in gridSample
+new function 'threshold'
+
+--- 1-September-2012, version 0.7-23
+Running Sys.setenv(NOAWT=TRUE) before calling rJava, to solve maxent/mac issues. Suggested by Pascal Title.
+New function "mess" by Jean-Pierre Rossi
+
+--- 6-February-2012, version 0.7-17
+New argument to pwdSample, "nearest", suggested by Kumar Mainali 
+maxent no longer needs to write a parameters file to disk to make a prediction (this led in some cases to problems when using a cluster; reported by Rafael Wüest). 
+
+--- January-2012, version 0.7-14
+function gbif now attempts to download the data n times if downloads are interrupted (likely because of high traffic loads at the gbif server). Suggestion and changed code provided by John Baumgartner.
+
+--- 30-November-2011, version 0.7-13
+New 'ext' argument to gbif function to allow for querying for a geographic region
+imrovements to 'response'
+Fixed bug in 'evaluate' when using > 1000 evaluation points, discovered by Diego Nieto Lugilde
+
+--- 18-October-2011, version 0.7-12
+Fixed a problem with maxent that could occur when predicting from a an object fitted on another machine. Reported by Adam Smith: https://r-forge.r-project.org/forum/message.php?msg_id=5060 
+Fixed bug in biogeomancer function
+Fixed bug in .pointsInPolygon function that (randomly) affected evaluation of the circles, voronoiHull, and convHull models.
+
+--- 6-September-2011, version 0.7-8
+maxent argument 'replicates= ' is now supported
+
+--- 1-September-2011, version 0.7-6
+New functions ssb (spatial sorting bias) and pwdSample (pair-wise distance sampling)
+Several minor bug fixes. 
+Improved vignette (still under development).
+
+--- 3-July-2011, version 0.7-1
+maxent predict failure fixed by adding distpatch=TRUE to .jarray() (bug reported by Stella Copeland)
+rJava is now suggested instead of required (and its namespace not imported), such that dismo can be loaded if rJava is absent or complains about missing variables (JAVA_PATH) or libraries.
+
+--- 29-May-2011, version 0.6-9
+Removed bug in gbif function with sp=TRUE, reported by Luis Cayuela
+
+--- 18-May-2011, version 0.6-8
+Additional arguments to the response function
+Option to provide a filename to permanently save MaxEnt model output
+
+--- 30-Mar-2011, version 0.6-5
+New function 'response' to show single variable response curves (with the other variables at e.g. their median values)
+DistModel object has changed. presence and absence data are now stored as data.frames, not matrices.
+
+--- 13-Mar-2011, version 0.6-1
+Documentation changes to pass 'check' in R 2.13.0 (exported classes now all documented)
+
+--- 2-March-2011, version 0.6-0
+Another bug-fix in biovars. When writing results to file, only 12 layers were saved (reported by Marco & Jon Winchester)
+
+--- 26-January-2011, version 0.5-17
+Bug fixes in file writing in biovars (reported by Guinevere Wogan)
+Starting this log
