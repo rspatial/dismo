@@ -24,7 +24,7 @@ randomPoints(mask, n, p, ext=NULL, extf=1.1, excludep=TRUE, prob=FALSE,
   \item{extf}{numeric. Multiplyer to adjust the size of extent 'ext'. The default increases of 1.1 increases the extent a little (5\% at each side of the extent)}
   \item{excludep}{logical. If \code{TRUE}, presence points are exluded from background}
   \item{prob}{logical. If \code{TRUE} the values in \code{mask} are interpreted as probability weights (and the values should be positive numbers (or NA)). NOTE:  this currently only works for rasters of a relatively modest size (that can be loaded into RAM)}
-  \item{cellnumbers}{logical. If \code{TRUE}, cell numbers for ]code{mask} are returned rather than coordinates }
+  \item{cellnumbers}{logical. If \code{TRUE}, cell numbers for \code{mask} are returned rather than coordinates }
   \item{tryf}{numeric > 1. Multiplyer used for initial sample size from which the requested sample size is extracted after removing NA points (outside of mask) }
   \item{warn}{integer. 2 or higher gives most warnings. 0 or lower gives no warnings if sample size \code{n} is not reached }
   \item{lonlatCorrection}{logical. If \code{TRUE} then correct for the fact that longitude/latitude is not a planar coordinate system}
