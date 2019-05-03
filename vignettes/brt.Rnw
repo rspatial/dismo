@@ -1,0 +1,21 @@
+\documentclass{article}
+
+\usepackage{hyperref}
+
+% \VignetteIndexEntry{Boosted Regression Trees for ecological modeling}
+% \VignetteDepends{dismo}
+% \VignetteKeyword{spatial}
+
+\begin{document}
+
+\title{Boosted Regression Trees for ecological modeling}
+
+\author{Jane Elith and John Leathwick}
+
+\maketitle
+
+
+This document is now available on \url{https://rspatial.org/sdm} 
+
+
+\end{document}
