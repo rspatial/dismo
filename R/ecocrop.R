@@ -55,12 +55,13 @@ setMethod ('show' , 'ECOCROPcrop',
 
 
 setMethod ('plot', signature(x='ECOCROPcrop', y='missing'),
-	function(x, ...) {
+	function(x, ..., col=c("red", "blue"), lwd=1) {
 		graphics::par(mfrow=c(2, 1))
-		plot(c(0,1,1,0) ~ c(x@TMIN, x@TOPMN, x@TOPMX, x@TMAX), xlab='temperature', ylab='response')
-		lines(c(0,1,1,0) ~ c(x@TMIN, x@TOPMN, x@TOPMX, x@TMAX), col='red')
-		plot(c(0,1,1,0) ~ c(x@RMIN, x@ROPMN, x@ROPMX, x@RMAX), xlab='precipitation', ylab='response')
-		lines(c(0,1,1,0) ~ c(x@RMIN, x@ROPMN, x@ROPMX, x@RMAX), xlab='precipitation', ylab='', col='blue')
+		col = rep(col, length.out=2)
+		plot(c(0,1,1,0) ~ c(x@TMIN, x@TOPMN, x@TOPMX, x@TMAX), xlab='temperature', ylab='response', ...)
+		lines(c(0,1,1,0) ~ c(x@TMIN, x@TOPMN, x@TOPMX, x@TMAX), col=col[1], lwd=lwd)
+		plot(c(0,1,1,0) ~ c(x@RMIN, x@ROPMN, x@ROPMX, x@RMAX), xlab='precipitation', ylab='response', ...)
+		lines(c(0,1,1,0) ~ c(x@RMIN, x@ROPMN, x@ROPMX, x@RMAX), xlab='precipitation', ylab='', col=col[2], lwd=lwd)
 	}
 )
 
@@ -242,7 +243,14 @@ ecocrop <- function(crop, tmin, tavg, prec, rainfed=TRUE, ...) {
 	filename <- trim(filename)
 	v <- vector(length=ncol(outr))
 	if (filename=='') {
-		vv <- matrix(ncol=nrow(outr), nrow=ncol(outr))
+		if (!canProcessInMemory(outr)) {
+			filename <- rasterTmpFile()
+		} else {
+			vv <- matrix(ncol=nrow(outr), nrow=ncol(outr))
+		}
+	}
+	if (filename!='') {
+		outr <- writeStart(outr, filename, ...)
 	}
 	for (r in 1:nrow(outr)){
 		v[] <- NA
@@ -253,21 +261,22 @@ ecocrop <- function(crop, tmin, tavg, prec, rainfed=TRUE, ...) {
 		}
         nac <- which(!is.na(tmn[,1]))
         for (c in nac) {
-            if(sum(is.na(tmp)) == 0) {
-				e <- .doEcocrop(crop, tmn, tmp, pre, rainfed=rainfed)
+            if (!any(is.na(tmp[c,]))) {
+				e <- .doEcocrop(crop, tmn[c,], tmp[c,], pre[c,], rainfed=rainfed)
                 v[c] <- e@maxper[1]
             }
         }
         if (filename=='') {
             vv[,r] <- v
         } else {
-            outr <- setValues(outr, v, r)
-            outr <- writeRaster(outr, filename, ...)
+            outr <- writeValues(outr, v, r)
         }
     }
     
 	if (filename=='') { 
 		outr <- setValues(outr, as.vector(vv))  
+	} else {
+		outr <- writeStop(outr)
 	}
 	
     return(outr)

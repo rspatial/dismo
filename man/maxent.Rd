@@ -53,6 +53,12 @@ If \code{x} is a data.frame, \code{p} should be a vector with a length equal to 
 
 
 \note{
+if rJava does not work (" .onLoad failed in loadNamespace() for 'rJava', details:" etc), you may fixd that with this:
+
+Sys.setenv(JAVA_HOME=('C:\\Program Files\\Java\\jre1.8.0_181'))
+
+(adjust to point to the path of your Java jre installation.)
+
 If you want to give MaxEnt (the Java virtual machine that runs it) more memory, you can do that by running something like this (for 1 GB) \bold{before} you load the dismo library.
 
 \code{options(java.parameters = "-Xmx1g" )} 
@@ -91,11 +97,10 @@ Jane Elith, Steven J. Phillips, Trevor Hastie, Miroslav Dudik, Yung En Chee, Col
 }
 
 \examples{
-# only run if the maxent.jar file is available, in the right folder
-jar <- paste(system.file(package="dismo"), "/java/maxent.jar", sep='')
 
-# checking if maxent can be run (normally not part of your script)
-if (file.exists(jar) & require(rJava)) {
+# The rJava package needs to be installed and working. That also requires Java. 
+
+if (require(rJava)) {
 
 # get predictor variables
 fnames <- list.files(path=paste(system.file(package="dismo"), '/ex', sep=''), 
