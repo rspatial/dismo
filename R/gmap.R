@@ -9,7 +9,11 @@
 # October 2012
 # Updated with contributions by Sebastien Rochette
 
-gmap <- function(x, exp=1, type='terrain', filename='', style=NULL, scale=1, zoom=NULL, size=c(640, 640), rgb=FALSE, lonlat=FALSE, ...) {
+gmap <- function(x, exp=1, type='terrain', filename='', style=NULL, scale=1, zoom=NULL, size=c(640, 640), rgb=FALSE, lonlat=FALSE, map_key, geocode_key, ...) {
+
+	if (missing(map_key)) {
+		stop("you need to supply a Google API key")
+	}
 
 	if (! requireNamespace('rgdal') ) { 
 		stop('rgdal not available') 
@@ -77,7 +81,7 @@ gmap <- function(x, exp=1, type='terrain', filename='', style=NULL, scale=1, zoo
 	gurl <- "http://maps.googleapis.com/maps/api/staticmap?"
 	
 	if (is.character(x)) {
-		x <- geocode(x, oneRecord=TRUE)
+		x <- geocode(x, oneRecord=TRUE, geocode_key=geocode_key)
 		if (is.na(x$latitude)) { 
 			stop('location not found') 
 		}
@@ -144,7 +148,7 @@ gmap <- function(x, exp=1, type='terrain', filename='', style=NULL, scale=1, zoo
 		if (!is.null(style)) {
 			style <- gsub("\\|", "%7C", style)
 			style <- gsub(" ", "", style)
-			gurl <- paste(gurl, '&style=', style, sep='')
+			gurl <- paste0(gurl, '&style=', style)
 		}
 #		message(gurl, "\n")
 	
@@ -153,6 +157,8 @@ gmap <- function(x, exp=1, type='terrain', filename='', style=NULL, scale=1, zoo
 		filename <- rasterTmpFile()
 	}
 	extension(filename) <- 'gif'
+	
+	gurl <- paste0(gurl, "&key=", map_key)
 	download.file(gurl, filename, mode="wb", quiet=TRUE)
     
 	MyMap <- list(lat.center = center[1], lon.center = center[2], zoom = zoom)

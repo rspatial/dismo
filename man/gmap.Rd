@@ -8,8 +8,6 @@
 \description{
 Retrieve a 'Google Map' that can be used as a background for plotting points and other spatial data.
 
-The purpose of using this function should be to display the map in a browser. You should check the Google terms of use \url{http://code.google.com/apis/maps/terms.html} to see if your usage of this function (the Google API that creates the maps) is permitted.
-
 The projection of the returned Raster object is "Mercator" (unless you use \code{lonlat=TRUE}), and other spatial data may need to be transformed before it can be plotted on top of the Google map. You can use the \code{Mercator} function to transform points from longitude/latitude to Mercator. For SpatialLines and SpatialPolygons objects, use \code{spTransform} in the \code{rgdal} package.
 
 This function uses the Google static maps web-service, and is based on functions by Markus Loecher for the \code{RgoogleMaps} package. 
@@ -17,7 +15,7 @@ This function uses the Google static maps web-service, and is based on functions
 
 \usage{
 gmap(x, exp=1, type='terrain', filename='', style=NULL, scale=1, zoom=NULL, 
-      size=c(640, 640), rgb=FALSE, lonlat=FALSE, ...)
+      size=c(640, 640), rgb=FALSE, lonlat=FALSE, map_key, geocode_key, ...)
 
 Mercator(p, inverse = FALSE)
 }
@@ -34,6 +32,8 @@ Mercator(p, inverse = FALSE)
   \item{size}{vector of two integers indicating the number of columns and rows that is requested (what is returned depends on other factors as well). Maximum values are \code{c(640, 640)}, so you can only select a smaller area than the default. Note that the number of pixels returned can be doubled by using \code{scale=2}}
   \item{rgb}{logical. If \code{TRUE}, a RasterBrick is returned with three layers (red, green, blue). This can be plotted with \code{\link{plotRGB}}}
   \item{lonlat}{logical. If \code{TRUE} the Raster object returned has a longitude/latitude CRS instead of Mercator}
+  \item{map_key}{character. Your Google API key for mapping (and billing). See  https://developers.google.com/maps/documentation/javascript/get-api-key)}   
+  \item{geocode_key}{character. Your Google API key for geocoding (and billing). Only relevant if \code{x} is a textual locality description. See  https://developers.google.com/maps/documentation/javascript/get-api-key)}   
   \item{...}{additional parameters }
   
   \item{p}{Points. A two-column matrix, or a SpatialPoints object}
@@ -60,31 +60,24 @@ p <- spTransform(x, "+proj=merc +a=6378137 +b=6378137 +lat_ts=0.0 +lon_0=0.0 +x_
 
 \examples{
 \dontrun{
+mymapkey = "pk-tHVbDiymfUL"
+mygeokey = "Skxe99-adfKeax"
+
 library(rgdal)
 
-# get a map using names
-g = gmap('Australia')
-plot(g, inter=TRUE)
-gs = gmap('Sydney, New South Wales, Australia', type='satellite')
-plot(gs, inter=TRUE)
-gs = gmap('Sydney, Australia', type='satellite', exp=3)
-plot(gs, inter=TRUE)
-gs = gmap('Sydney, Australia', type='hybrid', zoom=10, scale=2)
-plot(gs, inter=TRUE)
-
 # from a maxtrix with lon/lat points
-x = runif(30)*10 + 40
-y = runif(30)*10 - 20
-xy = cbind(x, y)
-g = gmap(xy, type='hybrid')
+x <- runif(30)*10 + 40
+y <- runif(30)*10 - 20
+xy <- cbind(x, y)
+g <- gmap(xy, type='hybrid', map_key=mymapkey)
 plot(g, inter=TRUE)
 points(Mercator(xy) , col='red', pch=20)
 
 # or from an Extent object
-e = extent( -121.9531 , -120.3897 , 35.36 , 36.61956 )
+e <- extent( -121.9531 , -120.3897 , 35.36 , 36.61956 )
 # you can also get an Extent object by clicking on the map twice after using:
 # drawExtent()
-r = gmap(e)
+r <- gmap(e, map_key=mymapkey)
 plot(r, interpolate=TRUE)
 
 # transform points to Mercator for plotting on top of map:
@@ -102,9 +95,22 @@ ptm2 <- spTransform(pt, CRS("+proj=merc +a=6378137 +b=6378137 +lat_ts=0.0
       +lon_0=0.0 +x_0=0.0 +y_0=0 +k=1.0 +units=m +nadgrids=@null +no_defs"))
 points(ptm, col='red', pch='x', cex=3)
 
+
+
+# get a map using names
+g = gmap('Australia', map_key=mymapkey, geocode_key=mygeokey)
+plot(g, inter=TRUE)
+gs = gmap('Sydney, New South Wales, Australia', type='satellite', map_key=mymapkey, geocode_key=mygeokey)
+plot(gs, inter=TRUE)
+gs = gmap('Sydney, Australia', type='satellite', exp=3, map_key=mymapkey, geocode_key=mygeokey)
+plot(gs, inter=TRUE)
+gs = gmap('Sydney, Australia', type='hybrid', zoom=10, scale=2, map_key=mymapkey, geocode_key=mygeokey)
+plot(gs, inter=TRUE)
+
 # styles:
 g <- gmap("Brooklyn", style="feature:road.local|element:geometry|hue:0x00ff00|saturation:100
-  &style=feature:landscape|element:geometry|lightness:-100", type='roadmap')
+  &style=feature:landscape|element:geometry|lightness:-100", type='roadmap', 
+  map_key=mymapkey, geocode_key=mygeokey)
 plot(g)
 }
 }

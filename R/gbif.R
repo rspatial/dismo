@@ -48,13 +48,13 @@ gbif <- function(genus, species='', ext=NULL, args=NULL, geo=TRUE, sp=FALSE, rem
 	
 	if (! requireNamespace('jsonlite')) { stop('You need to install the jsonlite package to use this function') }
 
-	tmpfile <- paste(tempfile(), '.json', sep='')
+	tmpfile <- paste0(tempfile(), '.json')
 	ex <- .getExtGBIF(ext)
 	spec <- .fixNameGBIF(genus, species)
 	if (sp) geo <- TRUE
 	if (geo) { cds <- '&coordinatestatus=true' } else { cds <- '' }
 
-	base <- "http://api.gbif.org/v1/occurrence/search?"
+	base <- "https://api.gbif.org/v1/occurrence/search?"
 	
 	if (!is.null(args)) {
 		args <- trim(as.character(args))

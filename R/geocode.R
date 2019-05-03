@@ -3,14 +3,19 @@
 # Version 1.0
 # October 2010
 
-geocode <- function(x, oneRecord=FALSE, extent=NULL, progress='', ...) {
+geocode <- function(x, oneRecord=FALSE, extent=NULL, progress='', geocode_key,...) {
+
+	if (missing(geocode_key)) {
+		stop("you need to supply a Google API key")
+	}
+
 	ntry <- list(...)$ntry
 	if (is.null(ntry)) ntry <- 10
 	reps <- min(ntry, 10)
 	x <- as.character(x)
 	xx <- unique(x)
 	xx <- data.frame(ID=1:length(xx), place=xx)
-	resall <- .geocode(xx$place, oneRecord=oneRecord, extent=extent, progress=progress)
+	resall <- .geocode(xx$place, oneRecord=oneRecord, extent=extent, progress=progress, api_key=geocode_key)
 
 	k <- which(is.na(resall[,3]))
 	if (length(k) > 0 & reps > 1) {
@@ -21,7 +26,7 @@ geocode <- function(x, oneRecord=FALSE, extent=NULL, progress='', ...) {
 			j <- which(is.na(resall[,2]))
 			if (length(j) == 0) break
 			ids <- unique(resall[j,1])
-			res <- .geocode(xx[ids, 'place'], oneRecord=oneRecord, extent=extent, progress=progress)
+			res <- .geocode(xx[ids, 'place'], oneRecord=oneRecord, extent=extent, progress=progress, api_key=geocode_key)
 			k <- which(!is.na(res[,2]))
 			if (length(k) == 0) {
 				if (n == 2) break
@@ -49,17 +54,16 @@ geocode <- function(x, oneRecord=FALSE, extent=NULL, progress='', ...) {
 }
 
 
-.geocode <- function(x, oneRecord=FALSE, extent=NULL, progress='', ...) {
+.geocode <- function(x, oneRecord=FALSE, extent=NULL, progress='', api_key, ...) {
 	
-	if (! requireNamespace('XML')) stop('You need to install the XML package to be able use this function')
-
-	burl <- "http://maps.google.com/maps/api/geocode/xml?address="
+	tmpfile <- paste0(tempfile(), '.json')
+	burl <- "https://maps.google.com/maps/api/geocode/json?address="
 	res1 <- data.frame(matrix(NA, ncol=8, nrow=1))
 	colnames(res1) <- c('ID', 'interpretedPlace', 'longitude', 'latitude', 'xmin', 'xmax', 'ymin', 'ymax')
 	res <- res1[-1, ,drop=FALSE]
 	pb <- pbCreate(length(x), progress)
-	for (z in 1:length(x)) {
-		r <- x[z]
+	for (i in 1:length(x)) {
+		r <- x[i]
 		r <- gsub(', ', ',', r)
 		r <- gsub(' ,', ',', r)
 		r <- trim(r)
@@ -73,62 +77,52 @@ geocode <- function(x, oneRecord=FALSE, extent=NULL, progress='', ...) {
 				gurl <- paste(burl, r, "&bounds=", extent, "&sensor=false", sep="")	
 				gurl <- iconv(gurl, to='UTF-8')
 			}
-			try( doc <- XML::xmlInternalTreeParse(gurl, isURL=TRUE) )
-			if (class(doc)[1] == 'try-error') {
-				warning('cannot parse XML document\n')
-				status <- ''
-			} else { 
-				status <- XML::xmlValue(XML::getNodeSet(doc, "//GeocodeResponse//status")[[1]])
-			}
-			
-			if (status != "OK") {
-				message(status, ':', r)
-				w <- res1 
-				w[1] <- z
-				res <- rbind(res, w)
-				next
-			}
-		
-			p <- XML::xmlToList(doc)
-			n <- length(p)-1
-			place <- rep(NA, n)
-			location <- matrix(ncol=2, nrow=n)
-			viewport <- matrix(ncol=4, nrow=n)
-			bounds <- matrix(ncol=4, nrow=n)
-			for (i in 1:n) {
-				plc <- p[i+1]$result$formatted_address
-				place[i] <- ifelse(is.null(plc), "", plc)
-				location[i,] <- as.numeric(c(p[i+1]$result$geometry$location$lng, p[i+1]$result$geometry$location$lat))
-				viewport[i,] <- as.numeric(c(p[i+1]$result$geometry$viewport$southwest$lng, p[i+1]$result$geometry$viewport$northeast$lng, p[i+1]$result$geometry$viewport$southwest$lat, p[i+1]$result$geometry$viewport$northeast$lat) )
-				bnds <- as.numeric(c(p[i+1]$result$geometry$bounds$southwest$lng, p[i+1]$result$geometry$bounds$northeast$lng, p[i+1]$result$geometry$bounds$southwest$lat, p[i+1]$result$geometry$bounds$northeast$lat) )
-				if (length(bnds)==4) bounds[i,] <- bnds
-			}
-
-			w <- cbind(viewport, bounds)
-			w[,c(1,3)] <- pmin(w[,c(1,3)], w[,c(1,3)+4], na.rm=TRUE)
-			w[,c(2,4)] <- pmax(w[,c(2,4)], w[,c(2,4)+4], na.rm=TRUE)
-			w <- w[,1:4,drop=FALSE]
-			if (oneRecord & nrow(w) > 1) {
-				f <- apply(w, 2, range)
-				g <- apply(location, 2, mean)
-				w <- data.frame(z, NA, g[1], g[2], f[1,1], f[2,2], f[1,3], f[2,4])
+			gurl <- paste0(gurl, "&key=", api_key)
+			test <- try (download.file(gurl, tmpfile, quiet=TRUE))
+			json <- scan(tmpfile, what='character', quiet=TRUE, sep='\n',  encoding = "UTF-8")
+			js <- jsonlite::fromJSON(json)
+			if (js$status != "OK") {
+				w <- res1
+				w[1] <- i				
 			} else {
-				w <- data.frame(z, place, location, w)
+				p <- js$results
+				n <- nrow(p)
+				place <- rep(NA, n)
+				location <- matrix(ncol=2, nrow=n)
+				viewport <- matrix(ncol=4, nrow=n)
+				bounds <- matrix(ncol=4, nrow=n)
+				for (j in 1:n) {
+					plc <-  paste0(p[j,1][[1]][,1], collapse=", ")
+					place[j] <- ifelse(is.null(plc), "", plc)
+					geometry = p[j,3]
+					location[j,] <- as.numeric(c(geometry$location$lng, geometry$location$lat))
+					viewport[j,] <- as.numeric(c(geometry$viewport$southwest$lng, geometry$viewport$northeast$lng, geometry$viewport$southwest$lat, geometry$viewport$northeast$lat) )
+					bnds <- as.numeric(c(geometry$bounds$southwest$lng, geometry$bounds$northeast$lng, geometry$bounds$southwest$lat, geometry$bounds$northeast$lat) )
+					if (length(bnds)==4) bounds[j,] <- bnds
+				}
+
+				w <- cbind(viewport, bounds)
+				w[,c(1,3)] <- pmin(w[,c(1,3)], w[,c(1,3)+4], na.rm=TRUE)
+				w[,c(2,4)] <- pmax(w[,c(2,4)], w[,c(2,4)+4], na.rm=TRUE)
+				w <- w[,1:4,drop=FALSE]
+				if (oneRecord & nrow(w) > 1) {
+					f <- apply(w, 2, range)
+					g <- apply(location, 2, mean)
+					w <- data.frame(i, NA, g[1], g[2], f[1,1], f[2,2], f[1,3], f[2,4])
+				} else {
+					w <- data.frame(i, place, location, w)
+				}
+				colnames(w) <- colnames(res1)
 			}
-			colnames(w) <- colnames(res)
-			res <- rbind(res, w)
 		} else {
 			w <- res1
-			w[1] <- z
-			colnames(w) <- colnames(res)
-			res <- rbind(res, w)
+			w[1] <- i
 		}
+		res <- rbind(res, w)
 		pbStep(pb, z) 
 	} 
 	pbClose(pb)
 
-	rownames(res) <- 1:nrow(res)
-	
 	da <- pointDistance(res[,3:4], res[,c(5,7)], longlat=T)
 	db <- pointDistance(res[,3:4], res[,c(6,8)], longlat=T)
 	res$uncertainty <- round(pmin(da, db))
@@ -138,7 +132,7 @@ geocode <- function(x, oneRecord=FALSE, extent=NULL, progress='', ...) {
 }
 
 
-#a = geocode('San Jose, Mexico', oneRecord=F)
+#a = .geocode('San Jose, Mexico', oneRecord=F, api_key=placekey)
 
  
  

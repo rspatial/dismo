@@ -7,16 +7,16 @@
 \description{
 A wrapper around the Google geocoding web-service. It returns 0 to n matches. It is important to be as precise as possible, e.g. always include the country in the locality description. 
 
-The purpose of using this function should be to display the locations on a map in a browser. You should check the Google terms of use \url{http://code.google.com/apis/maps/terms.html} to see if your usage of this function (and the underlying Google API) is permitted.
 }
 
-\usage{geocode(x, oneRecord=FALSE, extent=NULL, progress='', ...)}
+\usage{geocode(x, oneRecord=FALSE, extent=NULL, progress='', geocode_key, ...)}
 
 \arguments{
   \item{x}{A vector of locality descriptions}
   \item{oneRecord}{Logical. If \code{TRUE} a single record for each item in x is returned. If the API returned multiple records, the values of this record are computed by averaging the coordinates and taking the union of all bounding boxes }
   \item{extent}{An Extent object, or an object that can be coerced to one, to bias the search towards that region}
   \item{progress}{Character. Valid values are "" (no progress indicator), "text" or "window"}
+  \item{geocode_key}{character. Your Google API key for geocoding (and billing). See  https://developers.google.com/maps/documentation/geocoding/get-api-key)}
   \item{...}{additional arguments (currently none implemeted)}
 }
 
