@@ -119,7 +119,7 @@ geocode <- function(x, oneRecord=FALSE, extent=NULL, progress='', geocode_key,..
 			w[1] <- i
 		}
 		res <- rbind(res, w)
-		pbStep(pb, z) 
+		pbStep(pb, i) 
 	} 
 	pbClose(pb)
 

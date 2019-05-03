@@ -11,12 +11,7 @@
 # file.name routes to a pdf file of this name
 #
 
-gbm.plot.fits <- function(gbm.object,  
-	v = 0,
-	mask.presence = FALSE, 
-	use.factor = FALSE )
-{
-
+gbm.plot.fits <- function(gbm.object,  v = 0, mask.presence = FALSE,  use.factor = FALSE ) {
 
     gbm.call <- gbm.object$gbm.call	#and the call details
     gbm.x <- gbm.call$gbm.x    
@@ -38,8 +33,8 @@ gbm.plot.fits <- function(gbm.object,
 		}
 	}
 	nl <- length(v)
-	nc <- ceiling(sqrt(nl))
-	nr <- ceiling(nl / nc)
+	nr <- ceiling(sqrt(nl))
+	nc <- ceiling(nl / nr)
 	old.par <- graphics::par(no.readonly = TRUE) 
 	on.exit(graphics::par(old.par))
 	graphics::par(mfrow=c(nr, nc))
