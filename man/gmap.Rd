@@ -100,11 +100,17 @@ points(ptm, col='red', pch='x', cex=3)
 # get a map using names
 g = gmap('Australia', map_key=mymapkey, geocode_key=mygeokey)
 plot(g, inter=TRUE)
-gs = gmap('Sydney, New South Wales, Australia', type='satellite', map_key=mymapkey, geocode_key=mygeokey)
+
+gs = gmap('Sydney, New South Wales, Australia', type='satellite',
+                map_key=mymapkey, geocode_key=mygeokey)
 plot(gs, inter=TRUE)
-gs = gmap('Sydney, Australia', type='satellite', exp=3, map_key=mymapkey, geocode_key=mygeokey)
+
+gs = gmap('Sydney, Australia', type='satellite', exp=3, 
+				map_key=mymapkey, geocode_key=mygeokey)
 plot(gs, inter=TRUE)
-gs = gmap('Sydney, Australia', type='hybrid', zoom=10, scale=2, map_key=mymapkey, geocode_key=mygeokey)
+
+gs = gmap('Sydney, Australia', type='hybrid', zoom=10, scale=2,
+				map_key=mymapkey, geocode_key=mygeokey)
 plot(gs, inter=TRUE)
 
 # styles:

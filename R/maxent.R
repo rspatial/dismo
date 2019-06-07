@@ -108,10 +108,10 @@ if (!isGeneric("maxent")) {
 }
 
 .getMeVersion <- function() {
-	jar <- paste(system.file(package="dismo"), "/java/maxent.jar", sep='')
-	if (!file.exists(jar)) {
-		stop('file missing:\n', jar, '.\nPlease download it here: http://biodiversityinformatics.amnh.org/open_source/maxent/')
-	}
+#	jar <- paste(system.file(package="dismo"), "/java/maxent.jar", sep='')
+#	if (!file.exists(jar)) {
+#		stop('file missing:\n', jar, '.\nPlease download it here: http://biodiversityinformatics.amnh.org/open_source/maxent/')
+#	}
 	.rJava()
 	mxe <- rJava::.jnew("meversion") 
 	v <- try(rJava::.jcall(mxe, "S", "meversion") )

@@ -98,7 +98,8 @@ Jane Elith, Steven J. Phillips, Trevor Hastie, Miroslav Dudik, Yung En Chee, Col
 
 \examples{
 
-# The rJava package needs to be installed and working. That also requires Java. 
+# The rJava package needs to be installed and working. 
+# This requires that you have a Java run-time environment (JRE) installed. 
 
 if (require(rJava)) {
 
