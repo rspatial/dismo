@@ -7,7 +7,8 @@ Depends: R (>= 3.2.0), methods, raster (>= 2.5-2), sp (>= 1.2-0)
 Suggests: rJava (>= 0.9-7), rgdal, rgeos, XML, ROCR, deldir, gstat,randomForest, kernlab, maptools, jsonlite,gbm (>= 2.1.1)
 Author: Robert J. Hijmans, Steven Phillips, John Leathwick and Jane Elith
 Maintainer: Robert J. Hijmans <r.hijmans@gmail.com> 
-Description: Functions for species distribution modeling, that is, predicting entire geographic distributions form occurrences at a number of sites and the environment at these sites.
+Description: Functions for species distribution modeling, that is, predicting entire geographic distributions form occurrences at a number of sites and the environment at these sites. To get started, you can use the tutorial at http://rspatial.org/sdm/
 License: GPL (>=3) + file LICENSE
 LazyLoad: yes
-URL: http://rspatial.org/sdm/
+URL: https://CRAN.R-project.org/package=dismo
+BugReports: https://github.com/rspatial/dismo/issues/
