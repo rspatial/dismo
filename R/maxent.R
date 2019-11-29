@@ -290,7 +290,7 @@ setMethod('maxent', signature(x='Raster', p='ANY'),
 setMethod('maxent', signature(x='data.frame', p='vector'), 
 	function(x, p, args=NULL, path, silent=FALSE, ...) {
 	
-		MEversion <- .getMeVersion()
+		#MEversion <- .getMeVersion()
 
 		x <- cbind(p, x)
 		x <- stats::na.omit(x)

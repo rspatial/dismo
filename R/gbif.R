@@ -192,6 +192,7 @@ gbif <- function(genus, species='', ext=NULL, args=NULL, geo=TRUE, sp=FALSE, rem
 			iso <- ccodes()
 			i <- match(z$ISO2, iso[, 'ISO2'])
 			z$country <- iso[i, 1]
+			z$country[is.na(z$ISO2)] <- NA	
 		}
 		
 		vrs <- c('locality', 'adm1', 'adm2', 'country', 'continent') 
