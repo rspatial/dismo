@@ -17,7 +17,7 @@
 			d[,i] <- pointDistance(xy[i,], xy, longlat=FALSE, r=r)
 		}
 	}
-	median(apply(d, 1, function(x)quantile(x, 0.1)))
+	stats::median(apply(d, 1, function(x)quantile(x, 0.1)))
 }
 
 
