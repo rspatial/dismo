@@ -18,12 +18,12 @@ usage:  \code{plot(x, y, ...)}
 \tabular{rll}{
 \tab \code{x}  \tab  Object of class ModelEvaluation  \cr
 \tab \code{y}  \tab  Character. Either 'ROC' or a threshold dependent measure such as 'kappa', 'TPR' \cr
-\tab \code{...}  \tab  Additional arguments that can be passed to \link[graphics]{plot} \cr
+\tab \code{...}  \tab  Additional arguments that can be passed to \link[base]{plot} \cr
 }
 }
 
 \seealso{
-\code{\link{ModelEvaluation-class}, \link[dismo]{density}, \link[dismo]{pairs}, \link[graphics]{plot} }
+\code{\link{ModelEvaluation-class}, \link[dismo]{density}, \link[dismo]{pairs}, \link[base]{plot} }
 }
 
 \author{

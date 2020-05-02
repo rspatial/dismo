@@ -21,13 +21,13 @@ usage:  \code{plot(x, y, ...)}
 \tabular{rll}{
 \tab \code{x}  \tab  Object of class DistModel or from a class that inherits from it \cr
 \tab \code{y}  \tab  missing \cr
-\tab \code{...}  \tab  Additional arguments that can be passed to \link[graphics]{plot} \cr
+\tab \code{...}  \tab  Additional arguments that can be passed to \link[base]{plot} \cr
 }
 }
 
 
 \seealso{
-\code{\link[dismo]{density}, \link[dismo]{pairs}, \link[graphics]{plot}}
+\code{\link[dismo]{density}, \link[dismo]{pairs}, \link[base]{plot}}
 }
 
 \author{
