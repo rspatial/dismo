@@ -15,7 +15,8 @@ evaluateROCR(model, p, a, x)
 }
  
 \arguments{
-  \item{model}{any fitted model, including objects inherting from 'DistModel'}
+  \item{model}{any fitted model, including objects inheriting from 'DistModel'}
+  
   \item{p}{presence points (x and y coordinates or SpatialPoints* object). 
   
            Or, if \code{x} is missing, values at presence points

@@ -26,7 +26,7 @@ evaluate(p, a, model, x, tr, ...)
 			
 			Or, a matrix with values to compute predictions for}
 			
-  \item{model}{any fitted model, including objects inherting from 'DistModel'; not used when \code{x} is missing}
+  \item{model}{any fitted model, including objects inheriting from 'DistModel'; not used when \code{x} is missing}
 
   \item{x}{Optional. Predictor variables (object of class Raster*). If present, \code{p} and \code{a} are interpreted as (spatial) points }
   
