@@ -44,6 +44,14 @@ ecocrop('potato', 5:16, 15:26, runif(12)*100)
 getCrop('Acacia brachystachya Benth.')
 crop <- getCrop('Hot pepper')
 ecocrop(crop, 5:16, 15:26, rainfed=FALSE)
+
+# with spatial data
+tmin = tavg = prec = brick(nrow=1, ncol=1)
+tmin <- setValues(tmin, t(matrix(5:16)))
+tavg <- tmin + 5
+prec <- setValues(prec, t(matrix(15:26)))
+crop <- getCrop('Hot pepper')
+ecocrop(crop, tmin, tavg, prec, rainfed = FALSE)
 }
 
 \keyword{spatial}
