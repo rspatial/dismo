@@ -237,50 +237,88 @@ ecocrop <- function(crop, tmin, tavg, prec, rainfed=TRUE, ...) {
 }
 
 
-.ecoSpat <- function(crop, tmin, tavg, prec, rainfed, div=10, filename='', ...) { 
-
-	outr <- raster(tmin)
-	filename <- trim(filename)
-	v <- vector(length=ncol(outr))
-	if (filename=='') {
-		if (!canProcessInMemory(outr)) {
-			filename <- rasterTmpFile()
-		} else {
-			vv <- matrix(ncol=nrow(outr), nrow=ncol(outr))
-		}
-	}
-	if (filename!='') {
-		outr <- writeStart(outr, filename, ...)
-	}
-	for (r in 1:nrow(outr)){
-		v[] <- NA
-		tmp <- getValues(tavg, r) / div
-        tmn <- getValues(tmin, r) / div
-        if (rainfed) { 
-			pre <- getValues(prec, r)
-		}
-        nac <- which(!is.na(tmn[,1]))
-        for (c in nac) {
-            if (!any(is.na(tmp[c,]))) {
-				e <- .doEcocrop(crop, tmn[c,], tmp[c,], pre[c,], rainfed=rainfed)
-                v[c] <- e@maxper[1]
-            }
+.ecoSpat <- function(crop, tmin, tavg, prec, rainfed, filename='', ...) { 
+  
+  out <- raster(tmin)
+  filename <- trim(filename)
+  
+  big <- !canProcessInMemory(out, 3)
+  
+  if (big & filename == '') {
+    filename <- rasterTmpFile()
+  }
+  
+  if (filename != '') {
+    out <- writeStart(out, filename, ...)
+    todisk <- TRUE
+  } else {
+    vv <- matrix(ncol=nrow(out), nrow=ncol(out))
+    todisk <- FALSE
+  }
+  
+  bs <- blockSize(tmin)
+  pb <- pbCreate(bs$n)
+  
+  if (todisk) {
+    for (i in 1:bs$n) {
+      
+      tmp <- getValues(tavg, row=bs$row[i], nrows=bs$nrows[i])
+      tmn <- getValues(tmin, row=bs$row[i], nrows=bs$nrows[i])
+      if (rainfed) { 
+        pre <- getValues(prec, row=bs$row[i], nrows=bs$nrows[i])
+      }
+      
+      v <- vector(length=nrow(tmp))
+      v[] <- NA
+      
+      nac <- which(!is.na(tmn[,1]))
+      
+      for (j in nac) {
+        if(sum(is.na(tmp[j,])) == 0) {
+          e <- .doEcocrop(crop, tmn[j,], tmp[j,], pre[j,], rainfed=rainfed)
+          # TODO: change if wanted to return month
+          s <- e@maxper[1]
+          v[j] <- e@suitability[s]  
         }
-        if (filename=='') {
-            vv[,r] <- v
-        } else {
-            outr <- writeValues(outr, v, r)
-        }
+      }
+      
+      out <- writeValues(out, v, bs$row[i])
+      pbStep(pb, i)
     }
     
-	if (filename=='') { 
-		outr <- setValues(outr, as.vector(vv))  
-	} else {
-		outr <- writeStop(outr)
-	}
-	
-    return(outr)
- }
-
+    out <- writeStop(out)
+    
+  } else {
+    
+    for (i in 1:bs$n) {
+      tmp <- getValues(tavg, row=bs$row[i], nrows=bs$nrows[i])
+      tmn <- getValues(tmin, row=bs$row[i], nrows=bs$nrows[i])
+      if (rainfed) { 
+        pre <- getValues(prec, row=bs$row[i], nrows=bs$nrows[i])
+      }
+      
+      v <- vector(length=nrow(tmp))
+      v[] <- NA
+      
+      nac <- which(!is.na(tmn[,1]))
+      
+      for (j in nac) {
+        if(sum(is.na(tmp[j,])) == 0) {
+          e <- .doEcocrop(crop, tmn[j,], tmp[j,], pre[j,], rainfed=rainfed)
+          # TODO: change if wanted to return month
+          s <- e@maxper[1]
+          v[j] <- e@suitability[s]  
+        }
+      }
+      
+      cols <- bs$row[i]:(bs$row[i]+bs$nrows[i]-1)
+      vv[,cols] <- matrix(v, nrow=out@ncols)
+      pbStep(pb, i)
+    }
+    out <- setValues(out, as.vector(vv))
+  }
+  pbClose(pb)
+  return(out)
+}
 
  
