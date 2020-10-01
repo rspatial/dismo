@@ -8,7 +8,7 @@
 
 voronoi <- function(xy, ext=NULL, eps=1e-09, ...){
 
-	if (!requireNamespace('deldir')) { stop('you need to first install the deldir libary') }
+	if (!requireNamespace('deldir')) { stop('first install the deldir package') }
 
 	dat <- NULL
 	sp <- FALSE
