@@ -55,7 +55,7 @@ Fielding, A.H. and J.F. Bell, 1997. A review of methods for the assessment of pr
 # p has the predicted values for 50 known cases (locations) 
 # with presence of the phenomenon (species)
 p <- rnorm(50, mean=0.7, sd=0.3)
-# b has the predicted values for 50 background locations (or absence)
+# a has the predicted values for 50 background locations (or absence)
 a <- rnorm(50, mean=0.4, sd=0.4)
 e <- evaluate(p=p, a=a)
 
