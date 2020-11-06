@@ -43,7 +43,7 @@ setMethod('predict', signature(object='GeographicDistance'),
 		} else {
 		
 			if ( inherits(x, 'SpatialPoints') )  { 
-				x <- coordinates(x) 
+				x <- coordinates(x)
 			} else {
 				x <- x[, colnames(object@presence)]
 			}
