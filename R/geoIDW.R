@@ -43,7 +43,7 @@ setMethod('geoIDW', signature(p='data.frame', a='data.frame'),
 
 setMethod('geoIDW', signature(p='SpatialPoints', a='SpatialPoints'), 
 	function(p, a, ...) {
-		geoIDW(coordinates(p)[,1:2], coordinates(a)[,1:2], ...)
+		geoIDW(coordinates(p), coordinates(a), ...)
 	}
 )
 
