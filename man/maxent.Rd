@@ -121,8 +121,9 @@ occtrain <- occ[fold != 1, ]
 # fit model, biome is a categorical variable
 me <- maxent(predictors, occtrain, factors='biome')
 
+\donttest{
 # see the maxent results in a browser:
-# me
+me
 
 # use "args"
 # me2 <- maxent(predictors, occtrain, factors='biome', args=c("-J", "-P"))
@@ -168,6 +169,7 @@ e3
 threshold(e3)
 
 plot(e3, 'ROC')
+}
 
 }
 }
