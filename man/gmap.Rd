@@ -25,7 +25,7 @@ Mercator(p, inverse = FALSE)
   \item{exp}{numeric. An expansion factor to enlarge (by multiplication) the extent specified by \code{x} }
   \item{type}{character. Choose from 'roadmap', 'satellite', 'hybrid', 'terrain' }
   \item{filename}{character. Filename (optional). You can open the resulting file in a GIS program }
-  \item{style}{character. Additional style arguments. See \url{http://code.google.com/apis/maps/documentation/staticmaps/#StyledMapFeatures}.
+  \item{style}{character. Additional style arguments. See \url{https://code.google.com/apis/maps/documentation/staticmaps/#StyledMapFeatures}.
   Note that certain style features do not work in combination with (the default) \code{type='terrain'} }
   \item{scale}{1 or 2. Using 2 doubles the number of pixels returned (and thus gives you better image quality if you need a large image)}
   \item{zoom}{integer between 0 (the whole world) to 21 (very small area), centered on the center of the extent}

@@ -16,7 +16,7 @@ Build a "MaxEnt" (Maximum Entropy) species distribution model (see references be
 
 Background points are sampled randomly from the cells that are not \code{NA} in the first predictor variable, unless background points are specified with argument \code{a}. 
 
-This function uses the MaxEnt species distribution model software, which is a java program that you can download \href{http://biodiversityinformatics.amnh.org/open_source/maxent/}{here}. Put the file 'maxent.jar' in the 'java' folder of this package. That is the folder returned by \code{system.file("java", package="dismo")}. You need MaxEnt version 3.3.3b or higher. Please note that this program (maxent.jar) cannot be redistributed or used for commercial or for-profit purposes.
+This function uses the MaxEnt species distribution model software by Phillips, Dudik and Schapire.
 }
 
 \usage{
@@ -51,30 +51,6 @@ If \code{x} is a data.frame, \code{p} should be a vector with a length equal to 
 }
 
 
-
-\note{
-if rJava does not work (" .onLoad failed in loadNamespace() for 'rJava', details:" etc), you may fixd that with this:
-
-Sys.setenv(JAVA_HOME=('C:\\Program Files\\Java\\jre1.8.0_181'))
-
-(adjust to point to the path of your Java jre installation.)
-
-If you want to give MaxEnt (the Java virtual machine that runs it) more memory, you can do that by running something like this (for 1 GB) \bold{before} you load the dismo library.
-
-\code{options(java.parameters = "-Xmx1g" )} 
-
-Some people have reported problems when using this function on a Mac (Apple) computer. Specifically, the following error message occurs:
-
-\code{Error in .jcall(mxe, "S", "fit", c("autorun", "-e", afn, "-o", dirout, : java.lang.InternalError: Can't start the AWT because
-Java was started on the first thread. Make sure StartOnFirstThread is not specified in your application's Info.plist or on the command line.}
-
-This is a known problem with certain Java applications on Macs. There are two work-arounds that we are aware of:
-1) run \code{Sys.setenv(NOAWT=TRUE)} before running \code{library rJava} (this is what dismo does if rJava is not loaded).
-
-2) use the JGR interface (a Java based R GUI). You can install JGR from here: \url{http://www.rforge.net/JGR/}
-}
-
-
 \value{
 An object of class 'MaxEnt' (inherits from \code{\link{DistModel-class}}). Or a 'MaxEntReplicates' object if you use 'replicates=' as part of the \code{args} argument. If the function is run without any arguments a boolean value is returned (\code{TRUE} if maxent.jar was found).
 }
@@ -87,13 +63,13 @@ An object of class 'MaxEnt' (inherits from \code{\link{DistModel-class}}). Or a 
 
 \references{
 
-\url{http://biodiversityinformatics.amnh.org/open_source/maxent/}
+\url{https://biodiversityinformatics.amnh.org/open_source/maxent/}
 
 Steven J. Phillips, Miroslav Dudik, Robert E. Schapire, 2004.  A maximum entropy approach to species distribution modeling. Proceedings of the Twenty-First International Conference on Machine Learning. p. 655-662.
 
 Steven J. Phillips, Robert P. Anderson, Robert E. Schapire, 2006. Maximum entropy modeling of species geographic distributions. Ecological Modelling 190:231-259. 
 
-Jane Elith, Steven J. Phillips, Trevor Hastie, Miroslav Dudik, Yung En Chee, Colin J. Yates, 2011. A statistical explanation of MaxEnt for ecologists. Diversity and Distributions 17:43-57. \url{http://dx.doi.org/10.1111/j.1472-4642.2010.00725.x}
+Jane Elith, Steven J. Phillips, Trevor Hastie, Miroslav Dudik, Yung En Chee, Colin J. Yates, 2011. A statistical explanation of MaxEnt for ecologists. Diversity and Distributions 17:43-57. \url{https://dx.doi.org/10.1111/j.1472-4642.2010.00725.x}
 }
 
 \examples{

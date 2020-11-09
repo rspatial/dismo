@@ -16,7 +16,7 @@ data(acaule)
 }
 
 \references{
-\url{http://www.gbif.org}
+\url{https://www.gbif.org}
 }
 
 \keyword{datasets}

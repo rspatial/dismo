@@ -28,7 +28,7 @@ SpatialPolygonsDataFrame
 }
 
 \author{
-This is based on the \code{link[deldir]{deldir}} function by Rolf Turner and code by Carson Farmer: \url{http://www.carsonfarmer.com/?p=455}
+This method is based on the \code{link[deldir]{deldir}} function by Rolf Turner and code by Carson Farmer
 }
 
 
