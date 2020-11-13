@@ -94,47 +94,49 @@ if (!isGeneric("maxent")) {
 }	
 
 
-.rJava <- function() {
-	if (is.null(getOption('dismo_rJavaLoaded'))) {
-		# to avoid trouble on macs
-		Sys.setenv(NOAWT=TRUE)
-		if ( requireNamespace('rJava') ) {
-			rJava::.jpackage('dismo')
-			options(dismo_rJavaLoaded=TRUE)
-		} else {
-			stop('rJava cannot be loaded')
-		}
-	}
-}
-
-.getMeVersion <- function() {
-#	jar <- paste(system.file(package="dismo"), "/java/maxent.jar", sep='')
-#	if (!file.exists(jar)) {
-#		stop('file missing:\n', jar, '.\nPlease download it here: http://biodiversityinformatics.amnh.org/open_source/maxent/')
-#	}
-	.rJava()
-	mxe <- rJava::.jnew("meversion") 
-	v <- try(rJava::.jcall(mxe, "S", "meversion") )
-	if (class(v) == 'try-error') {
-		stop('"dismo" needs a more recent version of Maxent (3.3.3b or later) \nPlease download it here: http://biodiversityinformatics.amnh.org/open_source/maxent/
-		\n and put it in this folder:\n',
-		system.file("java", package="dismo"))
-	} else if (v == '3.3.3a') { 
-		stop("please update your maxent program to version 3.3.3b or later. This version is no longer supported. \nYou can download it here: http://biodiversityinformatics.amnh.org/open_source/maxent/")
-	}
-	return(v)
-}
-
-
 setMethod('maxent', signature(x='missing', p='missing'), 
 	function(x, p, silent=FALSE, ...) {
-		v <- .getMeVersion()
+
+		if (is.null(getOption('dismo_rJavaLoaded'))) {
+			# to avoid trouble on macs
+			Sys.setenv(NOAWT=TRUE)
+			if ( requireNamespace('rJava') ) {
+				rJava::.jpackage('dismo')
+				options(dismo_rJavaLoaded=TRUE)
+			} else {
+				if (!silent) {
+					cat("Cannot load rJava\n")			
+				}
+				return(FALSE)
+			}
+		}
+
+		if (is.null(getOption('dismo_maxent'))) {
+			mxe <- rJava::.jnew("meversion") 
+			v <- try(rJava::.jcall(mxe, "S", "meversion"), silent=TRUE)
+			if (class(v) == 'try-error') {
+				if (!silent) {
+					cat("MaxEnt is missing\n")
+				}
+				return(FALSE)
+			} else if (v == "3.3.3a") {
+				if (!silent) {
+					cat("This is not a compatible version of Maxent\n")
+				}
+				return(FALSE)
+			}
+			options(dismo_maxent=v)
+		} else {
+			v = getOption("dismo_maxent")
+		}
 		if (!silent) {
-			cat('This is MaxEnt version', v, '\n' )
+			cat("This is MaxEnt version", v, "\n")
 		}
 		invisible(TRUE)
 	}
 )
+
+
 
 setMethod('maxent', signature(x='SpatialGridDataFrame', p='ANY'), 
 	function(x, p, a=NULL, removeDuplicates=TRUE, nbg=10000, ...) {
@@ -290,7 +292,7 @@ setMethod('maxent', signature(x='Raster', p='ANY'),
 setMethod('maxent', signature(x='data.frame', p='vector'), 
 	function(x, p, args=NULL, path, silent=FALSE, ...) {
 	
-		MEversion <- .getMeVersion()
+		stopifnot(maxtent())
 
 		x <- cbind(p, x)
 		x <- stats::na.omit(x)

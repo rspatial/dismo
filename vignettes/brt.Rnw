@@ -2,19 +2,12 @@
 
 \usepackage{hyperref}
 
-% \VignetteIndexEntry{Boosted Regression Trees for ecological modeling}
+% \VignetteIndexEntry{BRT}
 % \VignetteDepends{dismo}
 % \VignetteKeyword{spatial}
 
 \begin{document}
 
-\title{Boosted Regression Trees for ecological modeling}
-
-\author{Jane Elith and John Leathwick}
-
-\maketitle
-
-
-This document is now available on \url{https://rspatial.org/raster/sdm/9_sdm_brt.html} 
+This document is now available here \url{https://rspatial.org/raster/sdm/9_sdm_brt.html} 
 
 \end{document}

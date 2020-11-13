@@ -12,7 +12,7 @@ if (!isGeneric("predict")) {
 
 setMethod('predict', signature(object='MaxEntReplicates'), 
 	function(object, x, ext=NULL, filename='', args="", ...) {
-		MEversion <- .getMeVersion()
+		stopifnot(maxent())
 
 		n <- length(object@models)
 		if (filename != '') {
@@ -98,7 +98,7 @@ setMethod('predict', signature(object='MaxEntReplicates'),
 setMethod('predict', signature(object='MaxEnt'), 
 	function(object, x, ext=NULL, args="", filename='', ...) {
 
-		MEversion <- .getMeVersion() 
+		stopifnot(maxent())
 
 		if (inherits(x, "SpatRaster")) {
 			return(.predictSpatRaster(object, x, ext, args, filename, ...))
