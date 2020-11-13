@@ -4,10 +4,11 @@
 
 % \VignetteIndexEntry{BRT}
 % \VignetteDepends{dismo}
-% \VignetteKeyword{spatial}
 
 \begin{document}
 
-This document is now available here \url{https://rspatial.org/raster/sdm/9_sdm_brt.html} 
+This document is now available here:
+
+\url{https://rspatial.org/raster/sdm/9_sdm_brt.html} 
 
 \end{document}

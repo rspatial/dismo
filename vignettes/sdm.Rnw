@@ -2,14 +2,13 @@
 
 \usepackage{hyperref}
 
-
 % \VignetteIndexEntry{SDM}
 % \VignetteDepends{dismo}
-% \VignetteKeyword{spatial}
-
 
 \begin{document}
 
-This document is now available here \url{https://rspatial.org/raster/sdm} 
+This document is now available here:
+
+\url{https://rspatial.org/raster/sdm} 
 
 \end{document}
