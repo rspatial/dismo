@@ -116,7 +116,7 @@ setMethod('maxent', signature(x='missing', p='missing'),
 			v <- try(rJava::.jcall(mxe, "S", "meversion"), silent=TRUE)
 			if (class(v) == 'try-error') {
 				if (!silent) {
-					cat("MaxEnt is missing\n")
+					cat("MaxEnt is missing or incompatible with your version of Java\n")
 				}
 				return(FALSE)
 			} else if (v == "3.3.3a") {
