@@ -21,8 +21,11 @@ This function uses the MaxEnt species distribution model software by Phillips, D
 
 \usage{
 \S4method{maxent}{Raster,ANY}(x, p, a=NULL, factors=NULL, removeDuplicates=TRUE, nbg=10000, ...)
+
 \S4method{maxent}{SpatialGridDataFrame,ANY}(x, p, a=NULL, removeDuplicates=TRUE, nbg=10000, ...)
+
 \S4method{maxent}{data.frame,vector}(x, p, args=NULL, path, silent=FALSE, ...)
+
 \S4method{maxent}{missing,missing}(x, p, silent=FALSE, ...)
 }
 
@@ -76,9 +79,10 @@ Jane Elith, Steven J. Phillips, Trevor Hastie, Miroslav Dudik, Yung En Chee, Col
 
 \donttest{
 
-# The rJava package needs to be installed and working. 
-# This requires that you have a Java run-time environment (JRE) installed. 
-if (require(rJava)) {
+# test if you can use maxent 
+maxent()
+
+if (maxent()) {
 
 # get predictor variables
 fnames <- list.files(path=paste(system.file(package="dismo"), '/ex', sep=''), 
