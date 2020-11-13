@@ -292,7 +292,7 @@ setMethod('maxent', signature(x='Raster', p='ANY'),
 setMethod('maxent', signature(x='data.frame', p='vector'), 
 	function(x, p, args=NULL, path, silent=FALSE, ...) {
 	
-		stopifnot(maxtent())
+		stopifnot(maxent())
 
 		x <- cbind(p, x)
 		x <- stats::na.omit(x)

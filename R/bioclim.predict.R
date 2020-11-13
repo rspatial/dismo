@@ -67,13 +67,13 @@ function(object, x, tails=NULL, ext=NULL, filename='', useC=TRUE, ...) {
 			maxcomp <- object@max
 			maxcomp[tails=='low'] <- Inf
 			
-			bc <- .Call('_percRank', as.double(pres), 
+			bc <- .percRankCpp(as.double(pres), 
 									as.integer(dim(pres)),
 									as.double(x),
 									as.integer(dim(x)),
 									as.double(mincomp), 
 									as.double(maxcomp),										 
-									as.integer(tailopt), PACKAGE='dismo' )
+									as.integer(tailopt))
 		} else {
 			bc <- matrix(ncol=length(ln), nrow=nrow(x))
 			for (i in 1:ncol(bc)) {
@@ -127,13 +127,13 @@ function(object, x, tails=NULL, ext=NULL, filename='', useC=TRUE, ...) {
 			vals <- getValuesBlock(x, row=rr, nrows=tr$nrows[i], firstcol, ncols)[, ln, drop=FALSE]
 	
 			if (useC) {
-				res <- .Call('_percRank', as.double(pres), 
+				res <- .percRankCpp(as.double(pres), 
 										 as.integer(dim(pres)),
 										 as.double(vals),
 										 as.integer(dim(vals)),
 										 as.double(mincomp), 
 										 as.double(maxcomp),										 
-										 as.integer(tailopt), PACKAGE='dismo' )
+										 as.integer(tailopt))
 			
 			} else {
 				bc <- matrix(0, ncol=ncol(vals), nrow=nrow(vals))
