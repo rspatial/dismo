@@ -94,6 +94,8 @@ if (!isGeneric("maxent")) {
 }	
 
 
+.getMeVersion <- function() {}
+
 setMethod('maxent', signature(x='missing', p='missing'), 
 	function(x, p, silent=FALSE, ...) {
 
