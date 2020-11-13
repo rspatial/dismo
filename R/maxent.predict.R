@@ -32,26 +32,82 @@ setMethod('predict', signature(object='MaxEntReplicates'),
 )
 
 
+
+.predictSpatRaster <- function(object, x, ext=NULL, args="", filename='', ...) {
+
+	args <- c(args, "")
+	lambdas <- paste(object@lambdas, collapse='\n')
+	variables <- colnames(object@presence)
+		
+	mxe <- rJava::.jnew("mebridge") 		
+	args <- c("-z", args)
+	tst <- rJava::.jcall(mxe, "S", "testPredictArgs", lambdas, args) 
+	if (!is.null(tst)) {
+		stop("args not understood:\n", tst)
+	}
+	filename <- trimws(filename)
+		
+		
+	if (! all(colnames(object@presence)  %in%  names(x) )) {
+		stop('missing layers (or wrong names)')
+	}
+
+	if (!is.null(ext)) {
+		x <- terra::crop(x, ext)
+	}
+	out <- terra::rast(x, nlyr=1)
+	names(out)  <- "maxent"
+	ncols <- terra::ncol(out)
+	if (!terra::readStart(x)) { stop(x@ptr$messages$getError()) }
+	on.exit(terra::readStop(x))
+			
+	overwrite <- list(...)$overwrite 
+	if (is.null(overwrite)) overwrite <- FALSE
+	wopt <- list(...)$wopt 
+	if (is.null(wopt)) wopt <- list()
+			
+	b <- terra::writeStart(out, filename, overwrite, wopt)
+	for (i in 1:b$n) {
+		rowvals <- terra::readValues(x, b$row[i], b$nrows[i], 1, ncol(x), TRUE, FALSE)
+		rowvals <- rowvals[,variables,drop=FALSE]
+		res <- rep(NA, times=nrow(rowvals))
+		rowvals <- stats::na.omit(rowvals)
+		if (length(rowvals) > 0) {
+			rowvals[] <- as.numeric(rowvals)
+			p <- rJava::.jcall(mxe, "[D", "predict", lambdas, rJava::.jarray(colnames(rowvals)), rJava::.jarray(rowvals, dispatch=TRUE), args) 
+
+			naind <- as.vector(attr(rowvals, "na.action"))
+			if (!is.null(naind)) {
+				res[-naind] <- p
+			} else {
+				res <- p
+			}
+			res[res == -9999] <- NA
+			terra::writeValues(out, res, b$row[i], b$nrows[i])
+		}
+		terra::writeStop(out)
+	}
+	return(out)
+}
+
+
+
+
+
+
 setMethod('predict', signature(object='MaxEnt'), 
 	function(object, x, ext=NULL, args="", filename='', ...) {
 
-		MEversion <- .getMeVersion()
+		MEversion <- .getMeVersion() 
+
+		if (inherits(x, "SpatRaster")) {
+			return(.predictSpatRaster(object, x, ext, args, filename, ...))
+		}
 		
 		args <- c(args, "")
-
-		#if (! file.exists(object@path)) {
-		#	object@path <- paste(.meTmpDir(), '/', paste(round(runif(10) * 10), collapse = ""), sep='')
-		#	if (! file.exists(object@path)) {
-		#		dir.create(object@path, recursive=TRUE, showWarnings=TRUE)
-		#	}
-		#}
-		#lambdas <- paste(object@path, '/lambdas.csv', sep="")
-		#write.table(object@lambdas, file=lambdas, row.names=FALSE, col.names=FALSE, quote=FALSE)
-		
 		lambdas <- paste(object@lambdas, collapse='\n')
 		variables <- colnames(object@presence)
 		
-		#MEversion <- .getMeVersion()
 		mxe <- rJava::.jnew("mebridge") 		
 		args <- c("-z", args)
 		tst <- rJava::.jcall(mxe, "S", "testPredictArgs", lambdas, args) 
@@ -130,8 +186,7 @@ setMethod('predict', signature(object='MaxEnt'),
 			} else {
 				out <- writeStop(out)
 			}
-		
-		
+
 		} else { 
 		
 		

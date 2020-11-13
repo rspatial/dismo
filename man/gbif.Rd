@@ -38,7 +38,7 @@ data frame
 
 
 \references{
-\url{http://www.gbif.org/occurrence}
+\url{https://www.gbif.org/occurrence}
 }
 
 \examples{

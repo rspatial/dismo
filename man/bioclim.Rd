@@ -52,7 +52,7 @@ G. Manion, C. Moritz, M. Nakamura, Y. Nakazawa, J. McC. Overton, A.T. Peterson, 
 S. Williams, M. Wisz and N. Zimmerman, 2006. 
 Novel methods improve prediction of species' distributions from occurrence data. Ecography 29: 129-151. \url{https://dx.doi.org/10.1111/j.2006.0906-7590.04596.x}
 
-Hijmans R.J., and C.H. Graham, 2006. Testing the ability of climate envelope models to predict the effect of climate change on species distributions. Global change biology 12: 2272-2281. \url{http://dx.doi.org/10.1111/j.1365-2486.2006.01256.x}
+Hijmans R.J., and C.H. Graham, 2006. Testing the ability of climate envelope models to predict the effect of climate change on species distributions. Global change biology 12: 2272-2281. \url{https://dx.doi.org/10.1111/j.1365-2486.2006.01256.x}
 }
 
 

@@ -2,13 +2,13 @@ Package: dismo
 Type: Package
 Title: Species Distribution Modeling
 Description: Functions for species distribution modeling, that is, predicting the environmental similarity of any site to that of the locations of known occurrences of a species.
-Version: 1.3-0
-Date: 2020-11-08
+Version: 1.3-2
+Date: 2020-11-12
 Depends: R (>= 3.2.0), methods, raster (>= 2.5-2), sp (>= 1.2-0)
-Suggests: rJava (>= 0.9-7), rgdal, rgeos, XML, ROCR, deldir, gstat,randomForest, kernlab, maptools, jsonlite,gbm (>= 2.1.1)
+Suggests: rJava (>= 0.9-7), terra, rgdal, rgeos, XML, ROCR, deldir, gstat,randomForest, kernlab, maptools, jsonlite,gbm (>= 2.1.1)
 Author: Robert J. Hijmans, Steven Phillips, John Leathwick and Jane Elith
 Maintainer: Robert J. Hijmans <r.hijmans@gmail.com> 
 License: GPL (>=3)
 LazyLoad: yes
-URL: http://rspatial.org/raster/sdm/
+URL: https://rspatial.org/raster/sdm/
 BugReports: https://github.com/rspatial/dismo/issues/

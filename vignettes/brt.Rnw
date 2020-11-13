@@ -15,7 +15,6 @@
 \maketitle
 
 
-This document is now available on \url{https://rspatial.org/sdm} 
-
+This document is now available on \url{https://rspatial.org/raster/sdm/9_sdm_brt.html} 
 
 \end{document}

@@ -74,6 +74,8 @@ Jane Elith, Steven J. Phillips, Trevor Hastie, Miroslav Dudik, Yung En Chee, Col
 
 \examples{
 
+\donttest{
+
 # The rJava package needs to be installed and working. 
 # This requires that you have a Java run-time environment (JRE) installed. 
 
@@ -97,7 +99,6 @@ occtrain <- occ[fold != 1, ]
 # fit model, biome is a categorical variable
 me <- maxent(predictors, occtrain, factors='biome')
 
-\donttest{
 # see the maxent results in a browser:
 me
 
