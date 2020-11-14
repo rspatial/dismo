@@ -123,7 +123,7 @@ function(gbm.object,                # a gbm object - could be one from gbm.step
 			temp.lo <- loess(responses[[j]] ~ predictors[[j]], span = 0.3)
 			lines(predictors[[j]],fitted(temp.lo), lty = 2, col = 2)
 		}
-		if (plot.count == 1) {
+		if (plot.count == 1 & n.plots==1) {
 			if (write.title) {
 				title(paste(response.name," - page ",n.pages,sep=""))
 			}
