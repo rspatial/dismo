@@ -59,7 +59,23 @@
 			colnames(res) <- c("x", "y")
 		}
 		res <- rbind(res, res[1,])
-		pols <- c(pols, Polygons(list(Polygon( res )), i))		
+		if (diff(range(res[,1])) > 350) {  # basic test for wrapping
+			r1 <- res[res[,1] < 0, ,drop=FALSE]
+			r2 <- res[res[,1] >= 0, ,drop=FALSE]
+			if (nrow(r1) < 3) {
+				res[res[,1] < 0, 1] <- res[res[,1] < 0, 1] + 360
+				pols <- c(pols, Polygons(list(Polygon( res )), i))
+			} else if (nrow(r2) < 3) {
+				res[res[,1] >= 0, 1] <- res[res[,1] >= 0, 1] - 360
+				pols <- c(pols, Polygons(list(Polygon( res )), i))
+			} else {
+				r1[c(1,nrow(r1)),1] <- -180
+				r2[c(1,nrow(r2)),1] <- 180
+				pols <- c(pols, Polygons(list(Polygon(r1), Polygon(r2)), i))
+			}
+		} else {
+			pols <- c(pols, Polygons(list(Polygon( res )), i))
+		}
 	}
 
 	pols <- SpatialPolygons(pols)
