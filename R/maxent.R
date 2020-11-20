@@ -134,7 +134,7 @@ setMethod('maxent', signature(x='missing', p='missing'),
 		if (!silent) {
 			cat("This is MaxEnt version", v, "\n")
 		}
-		TRUE
+		invisible(TRUE)
 	}
 )
 
