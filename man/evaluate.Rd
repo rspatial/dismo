@@ -6,7 +6,7 @@
 \title{ Model evaluation }
 
 \description{ 
-Cross-validation of models with presence/absence data. Given a vector of presence and a vector of absence values (or a model and presence and absence points and predictors), confusion matrices are computed (for varying thresholds), and model evaluation statistics are computed for each confusion matrix / threshold. See the description of class \code{\link{ModelEvaluation-class}} for more info.
+Evaluation of models with presence/absence data. Given a vector of presence and a vector of absence values (or a model and presence and absence points and predictors), confusion matrices are computed (for varying thresholds), and model evaluation statistics are computed for each confusion matrix / threshold. See the description of class \code{\link{ModelEvaluation-class}} for more info.
 }
 
 \usage{
