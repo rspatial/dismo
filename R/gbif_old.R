@@ -132,7 +132,7 @@
 			stop('GBIF server does not return a valid answer after 5 tries')
 		}
     	x <- try(readLines(url, warn = FALSE))
-		if (!(inherits(x, 'try-error')) break
+		if (!(inherits(x, 'try-error'))) break
     }
     xn <- x[grep('totalMatched', x)]
 	if (length(xn) == 0) {
