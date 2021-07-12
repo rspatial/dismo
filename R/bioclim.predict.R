@@ -48,7 +48,7 @@ function(object, x, tails=NULL, ext=NULL, filename='', useC=TRUE, ...) {
 	}
 	tailopt <- match(tails, c('both', 'high', 'low'))
 	
-	if (! (extends(class(x), 'Raster')) ) {
+	if (! (extends(class(x)[1], 'Raster')) ) {
 		if (! all(ln %in% colnames(x)) ) {
 			stop('missing variables in x')
 		}

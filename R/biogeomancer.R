@@ -17,7 +17,7 @@
 		theurl <- paste("http://bg.berkeley.edu:8080/ws/single?cy=", d$country[r], "&sp=", d$adm1[r], "&co=", d$adm2[r], "&locality=", d$locality[r], sep='')
 		
 		try( doc <- XML::xmlInternalTreeParse(theurl) )
-		if (class(doc)[1] == 'try-error') {
+		if (inherits(doc, 'try-error')) {
 			ans <- data.frame(lon=NA, lat=NA, coordUncertaintyM=NA)
 		} else {
 # to do: improved parsing:	

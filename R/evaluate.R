@@ -84,7 +84,7 @@ evaluate <- function(p, a, model, x, tr, ...) {
 	xc@auc <- R / (as.numeric(na) * as.numeric(np))
 	
 	cr <- try( cor.test(c(p,a), c(rep(1, length(p)), rep(0, length(a))) ), silent=TRUE )
-	if (class(cr) != 'try-error') {
+	if (!inherits(cr, 'try-error')) {
 		xc@cor <- cr$estimate
 		xc@pcor <- cr$p.value
 	}

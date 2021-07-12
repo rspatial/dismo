@@ -10,7 +10,7 @@ setMethod('predict', signature(object='CircleHull'),
 	function(object, x, ext=NULL, mask=FALSE, filename='',  ...) {
 	
 		nc <- nrow(object@polygons@data)
-		if ( extends(class(x), 'Raster'))  {
+		if ( extends(class(x)[1], 'Raster'))  {
 			if (! mask) {
 				x <- raster(x)
 			}

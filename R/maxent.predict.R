@@ -200,11 +200,11 @@ setMethod('predict', signature(object='MaxEnt'),
 			
 			
 			x <- x[,variables,drop=FALSE]
-			if (class(x) == 'data.frame') {
+			if (inherits(x, 'data.frame')) {
 				for (i in 1:ncol(x)) {
-					if (class(x[,i]) == 'factor') {
+					if (inherits(x[,i], 'factor')) {
 						x[,i] <- as.numeric(as.character(x[,i]))
-					} else if (class(x[,i]) == 'character') {
+					} else if (inherits(x[,i], 'character')) {
 						x[,i] <- as.numeric(x[,i])
 					}
 				}

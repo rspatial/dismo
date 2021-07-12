@@ -219,7 +219,7 @@ setMethod ('plot', signature(x='ECOCROP', y='missing'),
 
 
 ecocrop <- function(crop, tmin, tavg, prec, rainfed=TRUE, ...) {
-	if (class(crop) == 'character') {
+	if (inherits(crop, 'character')) {
 		crop <- getCrop(crop)
 	}
 	if (missing(prec) & rainfed) {

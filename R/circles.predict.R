@@ -7,7 +7,7 @@
 setMethod('predict', signature(object='CirclesRange'), 
 	function(object, x, ext=NULL, mask=FALSE, filename='', ...) {
 	
-		if ( extends(class(x), 'Raster'))  {
+		if ( extends(class(x)[1], 'Raster'))  {
 			if (! mask) {
 				x <- raster(x)
 			}

@@ -132,7 +132,7 @@
 			stop('GBIF server does not return a valid answer after 5 tries')
 		}
     	x <- try(readLines(url, warn = FALSE))
-		if (class(x) != 'try-error') break
+		if (!(inherits(x, 'try-error')) break
     }
     xn <- x[grep('totalMatched', x)]
 	if (length(xn) == 0) {
@@ -226,13 +226,13 @@
 				break
 			}
 			test <- try (download.file(aurl, tmpfile, quiet=TRUE))
-			if (class(test) == 'try-error') {
+			if (inherits(test, 'try-error')) {
 				print('download failure, trying again...')
 			} else {
 				xml <- scan(tmpfile, what='character', quiet=TRUE, sep='\n')
 				xml <- chartr('\a\v', '  ', xml)
 				zz <- try( gbifxmlToDataFrame(xml))
-				if (class(zz) == 'try-error') {
+				if (inherits(zz, 'try-error')) {
 					print('parsing failure, trying again...')
 				}
 				break

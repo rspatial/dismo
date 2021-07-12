@@ -165,7 +165,7 @@ setMethod('maxent', signature(x='SpatialGridDataFrame', p='ANY'),
 	} else if (inherits(x, 'matrix')) {
 		x <- data.frame(x)
 	}
-	if (! class(x) == 'data.frame' ) {
+	if (!inherits(x, 'data.frame')) {
 		stop('data should be  a matrix, data.frame, or SpatialPoints* object')
 	}
 	if (dim(x)[2] != 2) {
@@ -305,7 +305,7 @@ setMethod('maxent', signature(x='data.frame', p='vector'),
 
 		factors <- NULL
 		for (i in 1:ncol(x)) {
-			if (class(x[,i]) == 'factor') {
+			if (inherits(x[,i], 'factor')) {
 				factors <- c(factors, colnames(x)[i])
 			}
 		}
