@@ -2,8 +2,8 @@ Package: dismo
 Type: Package
 Title: Species Distribution Modeling
 Description: Methods for species distribution modeling, that is, predicting the environmental similarity of any site to that of the locations of known occurrences of a species.
-Version: 1.3-3
-Date: 2020-11-16
+Version: 1.3-4
+Date: 2021-07-12
 Imports: Rcpp, methods
 LinkingTo: Rcpp
 Depends: R (>= 3.2.0), raster (>= 2.5-2), sp (>= 1.2-0)
