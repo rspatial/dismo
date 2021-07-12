@@ -52,6 +52,7 @@ randomPoints <- function(mask, n, p, ext=NULL, extf=1.1, excludep=TRUE, prob=FAL
 		mask <- raster(mask, 1)	
 	}
 	
+	
 	tryf <- max(round(tryf[1]), 1)
 	
 	if (missing(p)) { 
@@ -62,7 +63,7 @@ randomPoints <- function(mask, n, p, ext=NULL, extf=1.1, excludep=TRUE, prob=FAL
 		}
 	}
 	
-	if (class(ext)=='character') {
+	if (inherits(ext, 'character')) {
 		if (! ext %in% c('points')) { 
 			stop("if ext is a character variable it should be 'points'") 
 		} else if (missing(p)) { 
@@ -91,18 +92,20 @@ randomPoints <- function(mask, n, p, ext=NULL, extf=1.1, excludep=TRUE, prob=FAL
 	nn <- max(nn, 10)
 
 	if (prob) {
+		
 		stopifnot(hasValues(mask))
 		cells <- crop(mask, mask2)
 		cells <- try( stats::na.omit(cbind(1:ncell(cells), getValues(cells))))
-		if (class(cells) == 'try-error') {
+		if (inherits(cells, 'try-error')) {
 			stop("the raster is too large to be used with 'prob=TRUE'")
 		}
 		prob <- cells[,2]
 		cells <- cells[,1]
-		if (couldBeLonLat(mask)) {
+		if (couldBeLonLat(mask) && lonlatCorrection) {
 			rows <- rowFromCell(mask2, cells)
 			y <- yFromRow(mask2, rows)
 			dx <- pointDistance(cbind(0, y), cbind(xres(mask2), y), longlat=TRUE)  
+			dx <- dx / max(dx)
 			prob <- prob * dx
 		}
 
