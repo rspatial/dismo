@@ -66,17 +66,16 @@ setMethod('predict', signature(object='MaxEntReplicates'),
 	wopt <- list(...)$wopt 
 	if (is.null(wopt)) wopt <- list()
 			
-	b <- terra::writeStart(out, filename, overwrite, wopt)
+	b <- terra::writeStart(out, filename, overwrite, wopt=wopt)
 	for (i in 1:b$n) {
 		rowvals <- terra::readValues(x, b$row[i], b$nrows[i], 1, ncol(x), TRUE, FALSE)
 		rowvals <- rowvals[,variables,drop=FALSE]
 		res <- rep(NA, times=nrow(rowvals))
 		rowvals <- stats::na.omit(rowvals)
 		if (length(rowvals) > 0) {
+			naind <- as.vector(attr(rowvals, "na.action"))
 			rowvals[] <- as.numeric(rowvals)
 			p <- rJava::.jcall(mxe, "[D", "predict", lambdas, rJava::.jarray(colnames(rowvals)), rJava::.jarray(rowvals, dispatch=TRUE), args) 
-
-			naind <- as.vector(attr(rowvals, "na.action"))
 			if (!is.null(naind)) {
 				res[-naind] <- p
 			} else {
@@ -85,9 +84,8 @@ setMethod('predict', signature(object='MaxEntReplicates'),
 			res[res == -9999] <- NA
 			terra::writeValues(out, res, b$row[i], b$nrows[i])
 		}
-		terra::writeStop(out)
 	}
-	return(out)
+	terra::writeStop(out)
 }
 
 
@@ -98,7 +96,7 @@ setMethod('predict', signature(object='MaxEntReplicates'),
 setMethod('predict', signature(object='MaxEnt'), 
 	function(object, x, ext=NULL, args="", filename='', ...) {
 
-		stopifnot(maxent())
+		stopifnot(maxent(silent=TRUE))
 
 		if (inherits(x, "SpatRaster")) {
 			return(.predictSpatRaster(object, x, ext, args, filename, ...))
