@@ -38,31 +38,31 @@ setMethod("plot", signature(x='ConvexHull', y='missing'),
 
 
 if (!isGeneric("convHull")) {
-	setGeneric("convHull", function(p, ...)
+	setGeneric("convHull", function(x, ...)
 		standardGeneric("convHull"))
 }	
 
 
-setMethod('convHull', signature(p='matrix'), 
-	function(p, n=1, crs=NA, ...) {
+setMethod('convHull', signature(x='matrix'), 
+	function(x, n=1, crs=NA, ...) {
 		ch <- new('ConvexHull')
-		ch@presence <- data.frame(p)
-		ch@polygons <- .generateConvexHulls(p, n, dissolve=FALSE)
+		ch@presence <- data.frame(x)
+		ch@polygons <- .generateConvexHulls(x, n, dissolve=FALSE)
 		crs(ch@polygons) <- crs
 		return(ch)
 	}
 )
 
 
-setMethod('convHull', signature(p='data.frame'), 
-	function(p, ...) {
-		convHull(as.matrix(p), ...)
+setMethod('convHull', signature(x='data.frame'), 
+	function(x, ...) {
+		convHull(as.matrix(x), ...)
 	}
 )
 
-setMethod('convHull', signature(p='SpatialPoints'), 
-	function(p, ...) {
-		convHull(coordinates(p), crs=p@proj4string, ...)
+setMethod('convHull', signature(x='SpatialPoints'), 
+	function(x, ...) {
+		convHull(coordinates(x), crs=x@proj4string, ...)
 	}
 )
 

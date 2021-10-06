@@ -17,11 +17,11 @@ I.e. this is the spatial convex hull, not an environmental hull.
 
 
 \usage{
-convHull(p, ...)
+convHull(x, ...)
 }
  
 \arguments{
-  \item{p}{point locations (presence). Two column matrix, data.frame or SpatialPoints* object}
+  \item{x}{point locations (presence). Two column matrix, data.frame or SpatialPoints* object}
   \item{...}{ Additional arguments. See details }
 }
 

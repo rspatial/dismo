@@ -3,6 +3,7 @@
 \Rdversion{1.1}
 
 \alias{voronoi}
+\alias{voronoi,ANY-method}
 
 \title{
 Voronoi polygons
@@ -13,11 +14,11 @@ Create Voronoi polygons for a set of points. (These are also known Thiessen poly
 }
 
 \usage{
-voronoi(xy, ext, eps=1e-09, ...)
+\S4method{voronoi}{ANY}(x, ext, eps=1e-09, ...)
 }
 
 \arguments{
- \item{xy}{SpatialPoints* or two column matrix with x and y coordinates}
+ \item{x}{SpatialPoints* or two column matrix with x and y coordinates}
  \item{ext}{Extent. Can be used to set the corners of the rectangular window enclosing the triangulation. The default is the data range plus 10 percent. See \code{\link[deldir]{deldir}}}
  \item{eps}{Numerical tolerance used in triangulation. See \code{\link[deldir]{deldir}}}
  \item{...}{Additional arguments (none)} 

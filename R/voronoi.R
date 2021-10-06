@@ -6,29 +6,35 @@
 # adapted from code by Carson Farmer
 # http://www.carsonfarmer.com/?p=455
 
-voronoi <- function(xy, ext=NULL, eps=1e-09, ...){
+
+
+if (!isGeneric("voronoi")) {setGeneric("voronoi", function(x, ...) standardGeneric("voronoi"))
+}	
+
+
+setMethod('voronoi', signature(x='ANY'), 
+function(x, ext=NULL, eps=1e-09, ...){
 
 	if (!requireNamespace('deldir')) { stop('first install the deldir package') }
 
 	dat <- NULL
 	sp <- FALSE
-	if (inherits(xy, 'Spatial')) {
-		if (.hasSlot(xy, 'data')) {
-			dat <- slot(xy, 'data')
+	if (inherits(x, 'Spatial')) {
+		if (.hasSlot(x, 'data')) {
+			dat <- slot(x, 'data')
 		}
-		prj <- proj4string(xy)
+		prj <- proj4string(x)
 		sp <- TRUE
-		xy <- coordinates(xy)
+		xy <- coordinates(x)
 		dups <- duplicated(xy)
 		if (any(dups)) {
 			xy <- xy[!dups, ,drop=FALSE]
 			dat <- dat[!dups, ,drop=FALSE]
 		}
 	} else {
-		xy <- stats::na.omit(xy[, 1:2])
+		xy <- stats::na.omit(x[, 1:2])
 		xy <- unique(xy)
 	}
-	
 	
 	if (!is.null(ext)) {
 		ext <- as.vector(extent(ext))
@@ -58,4 +64,5 @@ voronoi <- function(xy, ext=NULL, eps=1e-09, ...){
 	polys <- SpatialPolygonsDataFrame(polys, data=dat)
 	return(polys)
 }
+)
 
