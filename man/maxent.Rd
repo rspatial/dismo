@@ -72,7 +72,7 @@ Steven J. Phillips, Miroslav Dudik, Robert E. Schapire, 2004.  A maximum entropy
 
 Steven J. Phillips, Robert P. Anderson, Robert E. Schapire, 2006. Maximum entropy modeling of species geographic distributions. Ecological Modelling 190:231-259. 
 
-Jane Elith, Steven J. Phillips, Trevor Hastie, Miroslav Dudik, Yung En Chee, Colin J. Yates, 2011. A statistical explanation of MaxEnt for ecologists. Diversity and Distributions 17:43-57. \url{https://dx.doi.org/10.1111/j.1472-4642.2010.00725.x}
+Jane Elith, Steven J. Phillips, Trevor Hastie, Miroslav Dudik, Yung En Chee, Colin J. Yates, 2011. A statistical explanation of MaxEnt for ecologists. Diversity and Distributions 17:43-57. \doi{10.1111/j.1472-4642.2010.00725.x}
 }
 
 \examples{

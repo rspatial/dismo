@@ -25,7 +25,7 @@ A RasterBrick with layers corresponding to the input layers and an additional la
 }
 
 \references{
-Elith J., M. Kearney M., and S. Phillips, 2010. The art of modelling range-shifting species. \href{https://besjournals.onlinelibrary.wiley.com/doi/abs/10.1111/j.2041-210X.2010.00036.x}{Methods in Ecology and Evolution 1:330-342}.
+Elith J., M. Kearney M., and S. Phillips, 2010. The art of modelling range-shifting species. \doi{10.1111/j.2041-210X.2010.00036.x}{Methods in Ecology and Evolution 1:330-342}.
 }
 
 \author{
