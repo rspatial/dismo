@@ -18,7 +18,7 @@ std::vector<double> percRank(std::vector<double> x, std::vector<unsigned> dimx, 
 			if (!std::isnan(out[ii]) ) {
 				if (std::isnan(y[i]) ) {
 					out[ii] = NAN;
-				} else if ((y[i] < minc[v]) | (y[i] > maxc[v] )) {
+				} else if ((y[i] < minc[v]) || (y[i] > maxc[v] )) {
 					out[ii] = 0; 
 				} else {
 					size_t b = 0;
