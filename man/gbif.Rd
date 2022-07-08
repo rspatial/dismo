@@ -7,7 +7,7 @@ Data from GBIF
 }
 
 \description{
-This function downloads species occurence records from the Global Biodiversity Information Facility (\href{https://www.gbif.org}{GBIF}) data portal. You can download either a single species (if you append a '*' to the species name) or a subspecies of comparable level. You can download the data for an entire genus by using \code{species='*'}. Before using this function, please first check the GBIF \href{https://www.gbif.org/terms}{data use agreement}. 
+This function downloads species occurence records from the Global Biodiversity Information Facility (\href{https://www.gbif.org}{GBIF}) data portal. You can download either a single species (if you append a '*' to the species name) or a subspecies of comparable level. You can download the data for an entire genus by using \code{species='*'}. Before using this function, please first check the GBIF \href{https://www.gbif.org/terms}{data use agreement} and see the note below about how to cite these data.
 }
 
 
@@ -34,6 +34,10 @@ gbif(genus, species="", ext=NULL, args=NULL, geo=TRUE, sp=FALSE,
 
 \value{
 data frame 
+}
+
+\note{
+Under the terms of the GBIF data user agreement, users who download data agree to cite a DOI. Citation rewards data-publishing institutions and individuals and provides support for sharing open data [\href{https://docs.ropensci.org/rgbif/articles/gbif_citations.html}{1}][\href{https://www.gbif.org/citation-guidelines}{2}]. You can get a DOI for the data you downloaded by creating a \href{https://www.gbif.org/derived-dataset/about}{"derived" dataset}. For this to work, you need to keep the "datasetKey" variable in your dataset.
 }
 
 
