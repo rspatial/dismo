@@ -94,7 +94,7 @@ setMethod('convHull', signature(x='SpatialPoints'),
 	if (length(n) == 1) {
 		if (n == 1) {
 			h <- xy[chull(xy), ]
-			h <- rbind(xy, xy[1,,drop=FALSE])
+			h <- rbind(h, h[1,,drop=FALSE])
 			r <- spPolygons(h)
 		} else {
 			r <- .generate_k_ConvexHulls(xy, n, dissolve=dissolve)
