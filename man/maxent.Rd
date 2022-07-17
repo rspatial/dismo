@@ -24,7 +24,7 @@ This function uses the MaxEnt species distribution model software by Phillips, D
 
 \S4method{maxent}{SpatialGridDataFrame,ANY}(x, p, a=NULL, removeDuplicates=TRUE, nbg=10000, ...)
 
-\S4method{maxent}{data.frame,vector}(x, p, args=NULL, path, silent=FALSE, ...)
+\S4method{maxent}{data.frame,vector}(x, p, args=NULL, path, ...)
 
 \S4method{maxent}{missing,missing}(x, p, silent=FALSE, ...)
 }
