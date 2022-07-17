@@ -4,10 +4,8 @@
 # Licence GPL v3
 
 
-.generateCircleHull <- function(xy, lonlat, ...) {
+.generateCircleHull <- function(xy, lonlat, crs) {
 
-	crs  <- crs(xy)
-	
 	if (missing(lonlat)) {
 		if (is.na(crs)) {
 			lonlat <-  couldBeLonLat(xy)
@@ -18,18 +16,30 @@
 			lonlat <- isLonLat(crs)
 		}
 	}
+	if (is.na(crs)) {
+		if (lonlat) {
+			crs <- "+proj=longlat"
+		} else {
+			crs <- "+proj=utm +zone=1"
+		}
+	}
 	
 	xy <- na.omit(unique(.pointsToMatrix(xy, checkLonLat=lonlat)))
 	stopifnot(nrow(xy) > 1)
 
-	# first getting the points on the covex hull
+	# first getting the points on the convex hull
 	xy <- xy[chull(xy),]
 
 	f <- function(p) { max(pointDistance(rbind(p), xy, lonlat=lonlat)) }
 	p <- stats::optim(colMeans(xy), f)
 	if (is.na(crs)) crs <- CRS(as.character(NA))
-	b <- buffer(SpatialPoints(rbind(p$par), proj4string=crs), width=p$value, quadsegs=45)
-	SpatialPolygonsDataFrame(b, data.frame(x=p$par[1], y=p$par[2], r=p$value), match.ID = FALSE)
+	v <- terra::vect(rbind(p$par), crs=crs)
+	b <- buffer(v, width=p$value, quadsegs=45)
+	values(b) <- data.frame(x=p$par[1], y=p$par[2], r=p$value)
+	as(b, "Spatial")
+	
+	#b <- buffer(SpatialPoints(rbind(p$par), proj4string=crs), width=p$value, quadsegs=45)
+	#SpatialPolygonsDataFrame(b, , match.ID = FALSE)
 }
 
 
@@ -81,9 +91,9 @@ setMethod('circleHull', signature(p='matrix'),
 		ch@presence <- data.frame(p)
 		lonlat <- isLonLat(crs)
 		if (is.na(lonlat)) {
-			ch@polygons <- .generateCircleHull(p)
+			ch@polygons <- .generateCircleHull(p, crs=crs)
 		} else {
-			ch@polygons <- .generateCircleHull(p, lonlat=lonlat)		
+			ch@polygons <- .generateCircleHull(p, lonlat=lonlat, crs=crs)		
 		}
 		crs(ch@polygons) <- crs
 		return(ch)

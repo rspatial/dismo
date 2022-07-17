@@ -135,8 +135,11 @@ setMethod('circles', signature(p='data.frame'),
 		}
 		
 		ci@polygons <- .generateCircles(p, d=d, lonlat=lonlat, crs=crs, n=n, r=r, ...)
-		if (dissolve & requireNamespace('rgeos')) {
-			ci@polygons <- rgeos::gUnaryUnion(ci@polygons)
+		if (dissolve) {
+			v <- terra::vect(ci@polygons)
+			v <- aggregate(v)
+			values(v) <- NULL
+			ci@polygons <- as(v, "Spatial")
 		}
 		return(ci)
 	}

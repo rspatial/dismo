@@ -15,10 +15,6 @@ gmap <- function(x, exp=1, type='terrain', filename='', style=NULL, scale=1, zoo
 		stop("you need to supply a Google API key")
 	}
 
-	if (! requireNamespace('rgdal') ) { 
-		stop('rgdal not available') 
-	}
-	
 	if (! type %in% c('roadmap', 'satellite', 'hybrid', 'terrain')) {
 		warning("type should be: roadmap, satellite, hybrid, or terrain: Terrain chosen by default") 
 		type <- 'terrain'
@@ -174,7 +170,7 @@ gmap <- function(x, exp=1, type='terrain', filename='', style=NULL, scale=1, zoo
 	projection(r) <- "+proj=merc +a=6378137 +b=6378137 +lat_ts=0.0 +lon_0=0.0 +x_0=0.0 +y_0=0 +k=1.0 +units=m +nadgrids=@null +wktext  +no_defs"
 	try( hdr(r, format='worldfile', extension='.gfw') )
 	extension(filename) <- 'prj'
-	rgdal::showWKT(projection(r), file=filename, morphToESRI=TRUE)
+	writeLines(wkt(r), filename)
 	
 	if (lonlat) {
 		ct <- r@legend@colortable 
