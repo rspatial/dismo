@@ -120,7 +120,7 @@ gbif <- function(genus, species='', ext=NULL, args=NULL, geo=TRUE, sp=FALSE, rem
 				break
 			}
 			test <- try (download.file(aurl, tmpfile, quiet=TRUE))
-			if (class(test) == 'try-error') {
+			if (inherits(test, 'try-error')) {
 				print('download failure, trying again...')
 			} else {
 				json <- scan(tmpfile, what='character', quiet=TRUE, sep='\n',  encoding = "UTF-8")

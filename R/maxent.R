@@ -116,7 +116,7 @@ setMethod('maxent', signature(x='missing', p='missing'),
 		if (is.null(getOption('dismo_maxent'))) {
 			mxe <- rJava::.jnew("meversion") 
 			v <- try(rJava::.jcall(mxe, "S", "meversion"), silent=TRUE)
-			if (class(v) == 'try-error') {
+			if (inherits(v, 'try-error')) {
 				if (!silent) {
 					cat("MaxEnt is missing or incompatible with your version of Java\n")
 				}
