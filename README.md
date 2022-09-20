@@ -1,3 +1,10 @@
+# dismo
+
+[![CRAN
+status](https://www.r-pkg.org/badges/version/geosphere)](https://cran.r-project.org/package=dismo)
+[![CRAN RStudio mirror downloads](http://cranlogs.r-pkg.org/badges/dismo)](http://www.r-pkg.org/pkg/dismo)
+
+
 ## Installation
 
 `dismo` is available from CRAN, so you can use `install.packages("dismo")` to get the current *released version*
