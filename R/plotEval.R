@@ -14,7 +14,7 @@ setMethod("plot", signature(x='ModelEvaluation', y='character'),
 	function(x, y='ROC', ext='max', main='', col='red', ...) {
 		if (y == 'ROC') {
 			txt = paste('AUC=', round(x@auc,3))
-			plot(x@FPR, x@TPR, xlim=c(0,1), ylim=c(0,1), xlab='False postive rate', ylab='True positive rate', col=col, main=txt, ...)
+			plot(x@FPR, x@TPR, xlim=c(0,1), ylim=c(0,1), xlab='False positive rate', ylab='True positive rate', col=col, main=txt, ...)
 			lines(x@FPR, x@TPR, col=col)
 			lines(rbind(c(0,0), c(1,1)), lwd=2, col='grey')
 		} else if (y %in% slotNames(x)) {
