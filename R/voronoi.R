@@ -50,7 +50,7 @@ function(x, ext=NULL, eps=1e-09, ...){
 		polys[[i]] <- Polygons(list(Polygon(pc)), as.character(index[i]))
 	}
 	if (sp) {
-		polys <- SpatialPolygons(polys, proj4string=CRS(prj))
+		polys <- SpatialPolygons(polys, proj4string=sp::CRS(prj))
 	} else {
 		polys <- SpatialPolygons(polys)
 	}

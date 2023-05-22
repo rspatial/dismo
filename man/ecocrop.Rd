@@ -5,6 +5,8 @@
 \alias{ECOcrops}
 \alias{ECOCROP-class}
 \alias{ECOCROPcrop-class}
+\alias{plot,ECOCROP,missing-method}
+\alias{plot,ECOCROPcrop,missing-method}
 
 
 \title{Ecocrop model}

@@ -32,7 +32,7 @@
 
 	f <- function(p) { max(pointDistance(rbind(p), xy, lonlat=lonlat)) }
 	p <- stats::optim(colMeans(xy), f)
-	if (is.na(crs)) crs <- CRS(as.character(NA))
+##	if (is.na(crs)) crs <- CRS(as.character(NA))
 	v <- terra::vect(rbind(p$par), crs=crs)
 	b <- buffer(v, width=p$value, quadsegs=45)
 	values(b) <- data.frame(x=p$par[1], y=p$par[2], r=p$value)

@@ -4,6 +4,7 @@
 \alias{ecolim,matrix,matrix-method}
 \alias{EcoLim-class}
 \alias{predict,EcoLim-method}
+\alias{plot,EcoLim,ANY-method}
 
 
 \title{Ecolim model}
