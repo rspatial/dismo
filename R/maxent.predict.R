@@ -35,6 +35,8 @@ setMethod('predict', signature(object='MaxEntReplicates'),
 
 .predictSpatRaster <- function(object, x, ext=NULL, args="", filename='', ...) {
 
+	stop("Use the 'predicts' package to make MaxEnt models with a SpatRaster")
+	
 	args <- c(args, "")
 	lambdas <- paste(object@lambdas, collapse='\n')
 	variables <- colnames(object@presence)
@@ -58,7 +60,7 @@ setMethod('predict', signature(object='MaxEntReplicates'),
 	out <- terra::rast(x, nlyr=1)
 	names(out)  <- "maxent"
 	ncols <- terra::ncol(out)
-	if (!terra::readStart(x)) { stop(x@ptr$messages$getError()) }
+	terra::readStart(x)
 	on.exit(terra::readStop(x))
 			
 	overwrite <- list(...)$overwrite 
