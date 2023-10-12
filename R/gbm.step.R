@@ -118,7 +118,7 @@ gbm.step <- function (
 	if (is.null(fold.vector)) {
 
 		if (prev.stratify & family == "bernoulli") {
-			presence.mask <- data[,gbm.y] == 1
+			presence.mask <- data[,gbm.y] > 0
 			absence.mask <- data[,gbm.y] == 0
 			n.pres <- sum(presence.mask)
 			n.abs <- sum(absence.mask)
