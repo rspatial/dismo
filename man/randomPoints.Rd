@@ -20,7 +20,7 @@ randomPoints(mask, n, p, ext=NULL, extf=1.1, excludep=TRUE, prob=FALSE,
   \item{mask}{Raster* object. If the object has cell values, cells with \code{NA} are excluded (of the first layer of the object if there are multiple layers)}
   \item{n}{integer. Number of points}
   \item{p}{Presence points (if provided, random points won't be in the same cells (as defined by mask)}
-  \item{ext}{\link{Extent} object. Can be used to restrict sampling to a spatial extent}
+  \item{ext}{\link[raster]{Extent} object. Can be used to restrict sampling to a spatial extent}
   \item{extf}{numeric. Multiplyer to adjust the size of extent 'ext'. The default increases of 1.1 increases the extent a little (5\% at each side of the extent)}
   \item{excludep}{logical. If \code{TRUE}, presence points are exluded from background}
   \item{prob}{logical. If \code{TRUE} the values in \code{mask} are interpreted as probability weights (and the values should be positive numbers (or NA)). NOTE:  this currently only works for rasters of a relatively modest size (that can be loaded into RAM)}

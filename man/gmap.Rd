@@ -30,7 +30,7 @@ Mercator(p, inverse = FALSE)
   \item{scale}{1 or 2. Using 2 doubles the number of pixels returned (and thus gives you better image quality if you need a large image)}
   \item{zoom}{integer between 0 (the whole world) to 21 (very small area), centered on the center of the extent}
   \item{size}{vector of two integers indicating the number of columns and rows that is requested (what is returned depends on other factors as well). Maximum values are \code{c(640, 640)}, so you can only select a smaller area than the default. Note that the number of pixels returned can be doubled by using \code{scale=2}}
-  \item{rgb}{logical. If \code{TRUE}, a RasterBrick is returned with three layers (red, green, blue). This can be plotted with \code{\link{plotRGB}}}
+  \item{rgb}{logical. If \code{TRUE}, a RasterBrick is returned with three layers (red, green, blue). This can be plotted with \code{\link[raster]{plotRGB}}}
   \item{lonlat}{logical. If \code{TRUE} the Raster object returned has a longitude/latitude CRS instead of Mercator}
   \item{map_key}{character. Your Google API key for mapping (and billing). See  https://developers.google.com/maps/documentation/javascript/get-api-key)}   
   \item{geocode_key}{character. Your Google API key for geocoding (and billing). Only relevant if \code{x} is a textual locality description. See  https://developers.google.com/maps/documentation/javascript/get-api-key)}   

@@ -34,7 +34,7 @@ Provide a Raster* object with the independent variables. The names of the layers
   \tab  \code{ext} \tab An extent object to limit the prediction to a sub-region of 'x'. Or an object that can be coerced to an Extent object by extent; such as a Raster* or Spatial* object \cr
   \tab  \code{filename}  \tab Output filename for a new raster; if NA the result is not written to a file but returned with the RasterLayer object, in the data slot \cr
   \tab \code{progress} \tab Character. Valid values are "" (no progress bar), "text" and "windows" (on that platform only) \cr
-  \tab  \code{...}  \tab Additional model specific arguments. And additional arguments for file writing as for \link{writeRaster} \cr
+  \tab  \code{...}  \tab Additional model specific arguments. And additional arguments for file writing as for \link[raster]{writeRaster} \cr
 }
 
 

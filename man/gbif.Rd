@@ -19,7 +19,7 @@ gbif(genus, species="", ext=NULL, args=NULL, geo=TRUE, sp=FALSE,
 \arguments{
   \item{genus}{character. genus name}
   \item{species}{character. species name. Use '*' to download the entire genus. Append '*' to the species name to get all naming variants (e.g. with and witout species author name) and sub-taxa }
-  \item{ext}{Extent object to limit the geographic extent of the records. An extent can be created using functions like \code{\link{drawExtent}} and \code{\link{extent}}}
+  \item{ext}{Extent object to limit the geographic extent of the records. An extent can be created using functions like \code{\link[raster]{drawExtent}} and \code{\link[raster]{extent}}}
   \item{args}{character. Additional arguments to refine the query. See query parameters in https://www.gbif.org/developer/occurrence for more details}
   \item{geo}{logical. If \code{TRUE}, only records that have a georeference (longitude and latitude values) will be downloaded}
   \item{sp}{logical. If \code{TRUE}, \code{geo} will be set to \code{TRUE} and a \link[sp]{SpatialPoints}DataFrame will be returned}
